@@ -4,7 +4,7 @@
       {{ props.group_name }}
     </h2>
     <ul class="text-gray-800 text-2xl text-center">
-      <li v-for="item in props.students" :key="item.id" class="m-1 break-words">
+      <li v-for="item in props.students" :key="item" class="m-1 break-words">
         {{ item }}
       </li>
     </ul>
