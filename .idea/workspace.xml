@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9673c181-e7eb-4b11-80e9-af1ce8bcd42a" name="更改" comment="更改API端口" />
+    <list default="true" id="9673c181-e7eb-4b11-80e9-af1ce8bcd42a" name="更改" comment="添加网页图标">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +107,7 @@
       <workItem from="1757654079867" duration="2672000" />
       <workItem from="1757739908169" duration="20036000" />
       <workItem from="1757809114387" duration="11618000" />
-      <workItem from="1757838691370" duration="811000" />
+      <workItem from="1757838691370" duration="3545000" />
     </task>
     <task id="LOCAL-00001" summary="初始化小组信息展示插件">
       <option name="closed" value="true" />
@@ -170,7 +173,31 @@
       <option name="project" value="LOCAL" />
       <updated>1757839217547</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="配置build命令">
+      <option name="closed" value="true" />
+      <created>1757839771995</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1757839771995</updated>
+    </task>
+    <task id="LOCAL-00010" summary="更改API路由">
+      <option name="closed" value="true" />
+      <created>1757841675560</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1757841675560</updated>
+    </task>
+    <task id="LOCAL-00011" summary="添加网页图标">
+      <option name="closed" value="true" />
+      <created>1757845651219</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1757845651219</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +216,9 @@
     <MESSAGE value="修复了原因无法更新的bug" />
     <MESSAGE value="删除冗余变量" />
     <MESSAGE value="更改API端口" />
-    <option name="LAST_COMMIT_MESSAGE" value="更改API端口" />
+    <MESSAGE value="配置build命令" />
+    <MESSAGE value="更改API路由" />
+    <MESSAGE value="添加网页图标" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加网页图标" />
   </component>
 </project>
