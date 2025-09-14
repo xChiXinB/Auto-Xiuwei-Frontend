@@ -6,7 +6,8 @@
     "vite": "^7.1.5"
   },
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "vue": "^3.5.21"

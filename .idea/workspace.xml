@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9673c181-e7eb-4b11-80e9-af1ce8bcd42a" name="更改" comment="删除冗余变量">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
-    </list>
+    <list default="true" id="9673c181-e7eb-4b11-80e9-af1ce8bcd42a" name="更改" comment="更改API端口" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,7 +104,7 @@
       <workItem from="1757654079867" duration="2672000" />
       <workItem from="1757739908169" duration="20036000" />
       <workItem from="1757809114387" duration="11618000" />
-      <workItem from="1757838691370" duration="492000" />
+      <workItem from="1757838691370" duration="811000" />
     </task>
     <task id="LOCAL-00001" summary="初始化小组信息展示插件">
       <option name="closed" value="true" />
@@ -165,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757823105685</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="更改API端口">
+      <option name="closed" value="true" />
+      <created>1757839217547</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1757839217547</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +188,7 @@
     <MESSAGE value="完成了扣修为原因功能" />
     <MESSAGE value="修复了原因无法更新的bug" />
     <MESSAGE value="删除冗余变量" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除冗余变量" />
+    <MESSAGE value="更改API端口" />
+    <option name="LAST_COMMIT_MESSAGE" value="更改API端口" />
   </component>
 </project>
