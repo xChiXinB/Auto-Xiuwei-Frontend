@@ -78,8 +78,7 @@
       return res.json();
     })
     .then(json_data => {
-      let i = 0;
-      Object.entries(json_data).forEach(([key, value]) => {
+      Object.entries(json_data).forEach(([_, value]) => {
         // 参数
         // key 字符串：修为周名称
         // value 对象：键是记录id，值（对象）是一条记录
