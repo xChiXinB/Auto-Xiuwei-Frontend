@@ -46,8 +46,8 @@
   });
 
   const remote_server_ipv4 = '60.205.243.107';
-  const get_scores_url = `http://${remote_server_ipv4}/get_scores`;
-  const get_records_url = `http://${remote_server_ipv4}/get_records`;
+  const get_scores_url = `http://${remote_server_ipv4}/api/get_scores`;
+  const get_records_url = `http://${remote_server_ipv4}/api/get_records`;
 
   fetch(get_scores_url)
     .then(res => {
