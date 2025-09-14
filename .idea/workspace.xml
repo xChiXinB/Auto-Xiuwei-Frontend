@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9673c181-e7eb-4b11-80e9-af1ce8bcd42a" name="更改" comment="添加网页图标">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +108,9 @@
       <workItem from="1757739908169" duration="20036000" />
       <workItem from="1757809114387" duration="11618000" />
       <workItem from="1757838691370" duration="3545000" />
+      <workItem from="1757847379022" duration="39000" />
+      <workItem from="1757847618617" duration="1166000" />
+      <workItem from="1757854172668" duration="32000" />
     </task>
     <task id="LOCAL-00001" summary="初始化小组信息展示插件">
       <option name="closed" value="true" />
@@ -197,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1757845651219</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="添加网页图标">
+      <option name="closed" value="true" />
+      <created>1757847409828</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1757847409828</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
