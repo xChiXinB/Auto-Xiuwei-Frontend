@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-col bg-blue-300 rounded-2xl hover:shadow-lg p-4 items-center justify-center">
+  <div class="flex flex-col bg-blue-300 rounded-2xl p-4 items-center justify-center
+  hover:shadow-lg hover:-translate-y-2 transition duration-200 ease-in-out">
     <h2 class="text-4xl font-bold text-center break-words">
       {{ props.group_name }}
     </h2>
