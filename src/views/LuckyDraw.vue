@@ -13,16 +13,16 @@
     <div class="grid grid-cols-5 place-items-center w-[100%] mb-40">
         <div v-for="(content, index) in card_contents" :key="index"
         class="bg-blue-300 rounded-2xl w-[90%] h-20 border-6 border-blue-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
-        @click="(is_disappear && appear_index === -1) && click_card(index)">
+        @click="(is_disappear && (appear_index === -1)) && click_card(index)">
             <p class="text-3xl transition duration-500"
-            :class="(is_disappear && appear_index !== index) ? 'blur-sm' : ''">
+            :class="(is_disappear && (appear_index !== index)) ? 'blur-sm' : ''">
                 {{ content }}
             </p>
         </div>
     </div>
 
     <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
-    :class="(is_disappear && appear_index === -1) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
+    :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
     @click="draw()" ref="btn">
         <p class="text-4xl font-bold">
             Tap to draw
