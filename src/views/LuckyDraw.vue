@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="w-[20%] h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
+    <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
     :class="(is_disappear && appear_index === -1) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
     @click="draw()" ref="btn">
         <p class="text-4xl font-bold">
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref } from 'vue';
 
     const btn = ref(null);
     const is_disappear = ref(false);
