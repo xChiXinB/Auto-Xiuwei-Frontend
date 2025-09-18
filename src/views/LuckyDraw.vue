@@ -29,6 +29,13 @@
         </p>
     </div>
 
+    <transition name="hint">
+        <div v-if="show_hint"
+        class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-5xl rounded-4xl flex items-center justify-center">
+            Pick a card!
+        </div>
+    </transition>
+
     <router-link class="absolute bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
         Back
     </router-link>
@@ -40,6 +47,7 @@
     const btn = ref(null);
     const is_disappear = ref(false);
     const appear_index = ref(-1);
+    const show_hint = ref(false);
     let interval_id = null;
 
     const all_contents = {
@@ -48,9 +56,11 @@
     }
     function select(title) {
         clearInterval(interval_id)
+
         selected_title.value = title
         actual_contents.value = [...all_contents[selected_title.value]];
         card_contents.value = [...actual_contents.value];
+
         is_disappear.value = false;
         appear_index.value = -1;
     }
@@ -60,8 +70,14 @@
     select('Rewards');
 
     function draw() {
+        show_hint.value = true;
+        setTimeout(() => {
+            show_hint.value = false;
+        }, 1500);
+
         is_disappear.value = true;
-        appear_index.value = -1
+        appear_index.value = -1;
+
         interval_id = setInterval(() => {
             for (let i = 0; i < card_contents.value.length; i++) {
                 card_contents.value[i] = Math.random().toString().slice(10);
@@ -71,8 +87,25 @@
 
     function click_card(i) {
         clearInterval(interval_id);
+
         const contents_id = Math.floor(Math.random() * (actual_contents.value.length));
         card_contents.value[i] = actual_contents.value[contents_id];
         appear_index.value = i;
     }
 </script>
+
+<style>
+    .hint-enter-active,
+    .hint-leave-active {
+    transition: all 0.5s ease;
+    }
+
+    .hint-enter-from {
+        transform: scale(2);
+        opacity: 0;
+    }
+    .hint-leave-to {
+        transform: scale(0);
+        opacity: 0;
+    }
+</style>
