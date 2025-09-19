@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-5 place-items-center w-[100%] mb-40">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-items-center w-[100%] mb-40">
         <div v-for="(content, index) in card_contents" :key="index"
         class="bg-blue-300 rounded-2xl w-[90%] h-20 border-6 border-blue-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
         @click="(is_disappear && (appear_index === -1)) && click_card(index)">
