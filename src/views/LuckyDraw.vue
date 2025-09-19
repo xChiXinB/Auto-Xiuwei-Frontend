@@ -1,7 +1,7 @@
 <template>
     <transition name="all">
         <div v-if="show_all" class="min-w-[100vw] min-h-[100vh]">
-            <div class="w-full h-14 shadow">
+            <div class="w-full h-14 shadow overflow-x-auto whitespace-nowrap">
                 <div v-for="(contents, title) in all_contents" :key="title"
                 class="inline-block h-full p-2 hover:bg-blue-300 hover:font-bold border-r-2 border-gray-400 last:border-r-0 transition duration-200 ease-in-out"
                 @click="select(title)"
@@ -33,7 +33,7 @@
 
             <transition name="hint">
                 <div v-if="show_hint"
-                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-3xl md:text-5xl rounded-4xl flex items-center justify-center">
+                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300/60 backdrop-blur-sm border-4 border-amber-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
                     Pick a card!
                 </div>
             </transition>
