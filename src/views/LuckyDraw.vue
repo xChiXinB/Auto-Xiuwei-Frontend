@@ -1,48 +1,55 @@
 <template>
-    <div class="w-full h-14 shadow">
-        <div v-for="(contents, title) in all_contents" :key="title"
-        class="inline-block h-full p-2 hover:bg-blue-300 hover:font-bold transition duration-200 ease-in-out"
-        @click="select(title)"
-        :class="selected_title === title ? 'bg-blue-400' : 'bg-blue-200'">
-            <div class="flex items-center justify-center w-full h-full text-3xl text-gray-900">
-                {{ title }}
+    <transition name="all">
+        <div v-if="show_all" class="min-w-[100vw] min-h-[100vh]">
+            <div class="w-full h-14 shadow">
+                <div v-for="(contents, title) in all_contents" :key="title"
+                class="inline-block h-full p-2 hover:bg-blue-300 hover:font-bold border-r-2 border-gray-400 last:border-r-0 transition duration-200 ease-in-out"
+                @click="select(title)"
+                :class="selected_title === title ? 'bg-blue-400' : 'bg-blue-200'">
+                    <div class="flex items-center justify-center w-full h-full text-3xl text-gray-900">
+                        {{ title }}
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-items-center w-[100%] mb-40">
-        <div v-for="(content, index) in card_contents" :key="index"
-        class="bg-blue-300 rounded-2xl w-[90%] h-20 border-6 border-blue-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
-        @click="(is_disappear && (appear_index === -1)) && click_card(index)">
-            <p class="text-3xl transition duration-500"
-            :class="(is_disappear && (appear_index !== index)) ? 'blur-sm' : ''">
-                {{ content }}
-            </p>
-        </div>
-    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-items-center w-[100%] mb-40">
+                <div v-for="(content, index) in card_contents" :key="index"
+                class="bg-blue-300 rounded-2xl w-[90%] h-20 border-6 border-blue-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
+                @click="(is_disappear && (appear_index === -1)) && click_card(index)">
+                    <p class="text-3xl transition duration-500"
+                    :class="(is_disappear && (appear_index !== index)) ? 'blur-sm' : ''">
+                        {{ content }}
+                    </p>
+                </div>
+            </div>
 
-    <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
-    :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
-    @click="draw()" ref="btn">
-        <p class="text-4xl font-bold">
-            Tap to draw
-        </p>
-    </div>
+            <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
+            :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
+            @click="draw()" ref="btn">
+                <p class="text-4xl font-bold">
+                    Tap to draw
+                </p>
+            </div>
 
-    <transition name="hint">
-        <div v-if="show_hint"
-        class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-3xl md:text-5xl rounded-4xl flex items-center justify-center">
-            Pick a card!
+            <transition name="hint">
+                <div v-if="show_hint"
+                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-3xl md:text-5xl rounded-4xl flex items-center justify-center">
+                    Pick a card!
+                </div>
+            </transition>
+
+            <router-link class="fixed bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
+                Back to home
+            </router-link>
         </div>
     </transition>
-
-    <router-link class="fixed bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
-        Back
-    </router-link>
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    import { ref, nextTick } from 'vue';
+
+    const show_all = ref(false);
+    nextTick(() => {show_all.value = true});
 
     const btn = ref(null);
     const is_disappear = ref(false);
@@ -53,6 +60,7 @@
     const all_contents = {
         'Rewards': 'Top30校徽pin 超可爱卡套 超可爱卡套 午休自由券 息怒卡 乾坤大挪移 乾坤大挪移 限时同桌卡（一天） Top10校徽pin Top10校徽pin 制定周五主题色 制定周五主题色 超励志书签 超励志书签 电话夸夸卡 电话夸夸卡 电话夸夸卡 与Tracy共进午餐 与Tracy共进午餐 自由换座位券（一天） 微信夸夸卡 一起打球儿去 免罚券 限时同桌卡（半天） 水豚便利贴 一击必中卡 如有“文”助 拍立得合影券 雪王庆典（全组一个） 雪王庆典（全组一个） 雪王庆典（全组一个）'.split(' '),
         'Punishments': '扮成雕像五分钟班门口 现场做喜怒哀乐表情让老师照 照片当作班级电脑壁纸一天 一击即中必答真心话 去老师办公室打扫卫生一次 选择这周中一天帮值日 站班级门口说欢迎光临一课间 平板支撑二分钟 发pyq“我是小猪头”一天 周五cos一个人物 俯卧撑20个 发个人表情包到班群供校内用 公主抱一位组员 跨一个一字马 打扫老师办公室一次 楼道里大喊巴啦啦小魔仙全身变 爆料小名 涂口红 十倍清爽超级薄荷糖 十倍清爽超级薄荷糖 十倍清爽超级薄荷糖 十倍清爽超级薄荷糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 超酸超酸糖 恶心味道大全怪味豆 恶心味道大全怪味豆 恶心味道大全怪味豆 恶心味道大全怪味豆'.split(' '),
+        'Students': '管一楠-Nancy 赵望舒-Hermia 王之众-Andy 赵子轩-Arnold 崔刘沛阳-Forrest 钟弘毅-Andy 汤辰希-DavidTang 马睿皓-Harry 高悠然-Andy 王馨彤-Jessica 冯逸轩-Jayden 齐予涵-Hannah 夏琳涵-Nina 王子暄-Tom 任聿翔-Roger 董易文-Rose 付唯松-David'.split(' '),
     }
     function select(title) {
         clearInterval(interval_id)
@@ -106,6 +114,16 @@
     }
     .hint-leave-to {
         transform: scale(0);
+        opacity: 0;
+    }
+
+    .all-enter-active,
+    .all-leave-active {
+        transition: all 0.3s ease-in;
+    }
+
+    .all-enter-from,
+    .all-leave-to {
         opacity: 0;
     }
 </style>
