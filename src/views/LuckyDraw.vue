@@ -31,12 +31,12 @@
 
     <transition name="hint">
         <div v-if="show_hint"
-        class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-5xl rounded-4xl flex items-center justify-center">
+        class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300 border-4 border-yellow-600 text-3xl md:text-5xl rounded-4xl flex items-center justify-center">
             Pick a card!
         </div>
     </transition>
 
-    <router-link class="absolute bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
+    <router-link class="fixed bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
         Back
     </router-link>
 </template>
