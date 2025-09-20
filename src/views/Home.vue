@@ -107,7 +107,11 @@
         // 参数：
         // key 字符串：修为周名称
         // value 对象：键是组名，值（数组[字符串]）是每个人的得分
-        tables.value[i] = key; i++;
+        tables.value[i] = key
+          .replaceAll('_', ' ')
+          .replaceAll('-', '/')
+          .replace('scores', 'Xiuwei');
+        i++;
         // unfiltered_sth相当于是把json_data的键值从修为周名称替换为了selected_index
         unfiltered_data.push(value);
       });
