@@ -1,27 +1,33 @@
 <template>
   <Transition>
-    <div class="min-w-[100vw] min-h-[100vh] transition duration-300 ease-in"
-    :class="is_e ? `bg-gray-400` : `bg-sky-200`"
+    <div class="w-full min-h-full transition duration-300 ease-in"
+    :class="is_e ? `bg-gray-400 flex items-center justify-center` : `bg-sky-200`"
     v-if="show_all">
       <Transition>
         <template v-if="scores_ok && records_ok">
-          <div class="flex flex-col md:flex-row items-center md:justify-center h-auto md:min-h-screen">
+          <!--品字布局 ⬇️-->
+          <div class="w-full h-full flex flex-col">
+            <!--品字上面的口 ⬇️-->        <!--周修为选择栏-->
             <SelectBar @select="handle_select" :tables=tables></SelectBar>
+            <!--品字下面的吅 ⬇️--> <!--小组修为展示 | 修为详细记录-->
+            <!--在竖屏平板和手机上，“吅”会变成“吕”-->
+            <div class="flex flex-col lg:flex-row items-center lg:justify-center h-auto my-5">
+              <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 m-8 w-[90%] lg:w-[50%]">
+                <Group v-for="(students, group_name) in data" :key="group_name"
+                  :group_name=group_name
+                  :students=students
+                ></Group>
+              </div>
 
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 m-8 w-[90%] md:w-[50%]">
-              <Group v-for="(students, group_name) in data" :key="group_name"
-                :group_name=group_name
-                :students=students
-              ></Group>
+              <RecordsTable
+                :table_data="records"
+              ></RecordsTable>
             </div>
-
-            <RecordsTable
-              :table_data="records"
-            ></RecordsTable>
           </div>
+          <!--品字布局 ⬆️-->
         </template>
         <template v-else-if="is_e">
-          <div class="min-w-[100vw] min-h-[100vh] flex flex-col items-center justify-center">
+          <div class="w-full h-full flex flex-col items-center justify-center">
             <h1 class="text-5xl font-bold p-4">
               We are unable to fetch your data.
             </h1>
@@ -39,10 +45,6 @@
           <h1 class="text-6xl font-bold absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">Please wait...</h1>
         </template>
       </Transition>
-
-      <router-link class="fixed bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/lucky-draw">
-          Lucky Draw
-      </router-link>
     </div>
   </Transition>
 </template>

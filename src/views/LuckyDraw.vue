@@ -1,6 +1,6 @@
 <template>
     <transition name="all">
-        <div v-if="show_all" class="min-w-[100vw] min-h-[100vh]">
+        <div v-if="show_all" class="w-full min-h-[100vh]">
             <div class="w-full h-14 shadow overflow-x-auto whitespace-nowrap">
                 <div v-for="(contents, title) in all_contents" :key="title"
                 class="inline-block h-full p-2 hover:bg-blue-300 hover:font-bold border-r-2 border-gray-400 last:border-r-0 transition duration-200 ease-in-out"
@@ -37,10 +37,6 @@
                     Pick a card!
                 </div>
             </transition>
-
-            <router-link class="fixed bottom-5 left-5 text-2xl underline text-blue-950 hover:text-blue-700" to="/">
-                Back to home
-            </router-link>
         </div>
     </transition>
 </template>

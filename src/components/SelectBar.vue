@@ -1,5 +1,5 @@
 <template>
-  <div class="px-2 md:px-0 md:fixed md:top-0 md:left-0 md:z-50 shadow w-screen h-14 overflow-x-auto whitespace-nowrap">
+  <div class="shadow w-full h-14 overflow-x-auto whitespace-nowrap">
     <div v-for="(table, index) in props.tables" :key="index"
          class="inline-block h-full px-5 border-r-gray-500 border-r-1 last:border-r-0 hover:bg-blue-300 hover:font-bold transition duration-200 ease-in-out"
          @click="select(index)"
@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import {defineProps, defineEmits, ref} from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 
   const props = defineProps({
     tables: {
@@ -29,3 +29,5 @@ import {defineProps, defineEmits, ref} from 'vue';
     emit("select", index);
   }
 </script>
+
+<!-- md:px-0 md:fixed md:top-0 md:right-0 md:z-50 -->

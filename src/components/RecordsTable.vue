@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] md:w-[40%] min-h-[30vh] m-8 md:h-[80vh] rounded-2xl shadow-2xl flex flex-col">
+  <div class="w-[90%] lg:w-[40%] min-h-[30vh] m-8 lg:h-200 rounded-2xl shadow-2xl flex flex-col">
     <!--标题-->
     <div class="bg-blue-400 p-4 rounded-t-2xl">
       <h1 class="text-4xl font-bold text-white text-center">
