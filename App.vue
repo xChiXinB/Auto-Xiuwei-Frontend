@@ -19,8 +19,9 @@
   import SideBar from "./src/components/SideBar.vue";
   import ToggleSideBar from './src/components/ToggleSideBar.vue';
 
-  let w: number = window.innerWidth;
-  let timeout: number;
+  const md: number = 768;
+  let w: number = md;
+  let timeout: any;
 
   const collapsed = ref<boolean>(false);
   function collapse() {
@@ -31,6 +32,7 @@
   }
 
   onMounted(() => {
+    resize_e();
     window.addEventListener('resize', resize_e);
   });
 
@@ -41,7 +43,6 @@
   function resize_e() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      const md: number = 768;
       if (w < md) {
         if (window.innerWidth < md) return;
       } else if (w >= md) {
@@ -50,8 +51,10 @@
       w = window.innerWidth;
       if (w >= md) {
         collapsed.value = false;
-      };
-    }, 200);
+      } else {
+        collapsed.value = true;
+      }
+    }, 100);
   }
 
 </script>

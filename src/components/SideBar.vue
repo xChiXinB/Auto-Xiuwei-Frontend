@@ -5,7 +5,7 @@
             <img src="/icons/collapse.png" class="w-[40px] h-[40px]">
         </div>
         <div class="w-full py-5 h-auto flex flex-col items-center hover:bg-sky-300 transition duration-200"
-        v-for="navigator in ref_navig" :key="navigator.id"
+        v-for="navigator in ref_navig" :key="navigator.id" :class="(current_router === navigator.router) && `bg-sky-400`"
         @click="alter_router(navigator.router)">
             <img :src="navigator.url" class="w-[40px] h-[40px]">
             <span class="font-semibold" style="font-size: x-small;">{{ navigator.text }}</span>
@@ -35,14 +35,14 @@
         { id: 2, url: '/icons/lucky-draw.png', text: 'Lucky Draw', router: '/lucky-draw' },
     ]
 
+    const current_router = ref(router.currentRoute.value.path);
     function alter_router(location: string) {
-        router.push(location);
+        // 注意：push是异步函数
+        router.push(location)
+            .then(() => {
+                current_router.value = router.currentRoute.value.path;
+            });
     }
 
     const ref_navig = ref(navigators);
 </script>
-
-<!--
-todo: 加一个返回
-把select bar的定位改一下
--->
