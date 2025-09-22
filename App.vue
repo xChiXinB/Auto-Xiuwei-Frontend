@@ -5,7 +5,8 @@
 
   <div class="w-[100px] h-screen bg-green-500 fixed top-0 left-0 transition duration-200 ease-in-out shrink-0"
   :class="collapsed && `translate-x-[-100px]`">
-    <SideBar @collapse="collapse"></SideBar>
+    <SideBar @collapse="collapse"
+    :md="md"></SideBar>
   </div>
 
   <div class="min-h-full transition duration-200 ease-in-out shrink"

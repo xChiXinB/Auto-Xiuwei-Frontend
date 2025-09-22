@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, defineEmits, onMounted, nextTick } from "vue";
+    import { ref, defineEmits, onMounted, defineProps } from "vue";
     import { useRouter } from "vue-router";
     const router = useRouter();
 
@@ -22,6 +22,13 @@
     function collapse() {
         emit("collapse");
     }
+
+    const props = defineProps({
+        md: {
+            type: Number,
+            required: true,
+        },
+    });
 
     interface Unit {
         id: number;
@@ -48,6 +55,9 @@
         router.push(location)
             .then(() => {
                 current_router.value = router.currentRoute.value.path;
+                
+                if (window.innerWidth >= props.md) return;
+                emit("collapse");
             });
     }
 
