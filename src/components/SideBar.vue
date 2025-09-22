@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, defineEmits } from "vue";
+    import { ref, defineEmits, onMounted, nextTick } from "vue";
     import { useRouter } from "vue-router";
     const router = useRouter();
 
@@ -35,7 +35,14 @@
         { id: 2, url: '/icons/lucky-draw.png', text: 'Lucky Draw', router: '/lucky-draw' },
     ]
 
-    const current_router = ref(router.currentRoute.value.path);
+    const current_router = ref<string>("");
+    onMounted(() => {
+        // 目前不知道怎么稳定在网页刚加载就获取路由
+        setTimeout(() => {
+            current_router.value = router.currentRoute.value.path;
+            console.log(current_router.value);
+        }, 200);
+    });
     function alter_router(location: string) {
         // 注意：push是异步函数
         router.push(location)
