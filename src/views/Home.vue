@@ -21,6 +21,7 @@
 
               <RecordsTable
                 :table_data="records"
+                :title="`Detailed Xiuwei Records`"
               ></RecordsTable>
             </div>
           </div>

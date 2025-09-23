@@ -3,7 +3,7 @@
     <!--标题-->
     <div class="bg-blue-400 p-4 rounded-t-2xl">
       <h1 class="text-4xl font-bold text-white text-center">
-        Detailed XiuWei Records
+        {{ props.title }}
       </h1>
     </div>
 
@@ -37,6 +37,10 @@
   ]);
 
   const props = defineProps({
+    title: {
+      type: String,
+      required: true
+    },
     table_data: {
       type: Object,
       required: true

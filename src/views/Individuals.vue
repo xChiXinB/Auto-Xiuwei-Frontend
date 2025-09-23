@@ -1,13 +1,16 @@
 <template>
     <transition name="all">
-        <div class="w-full h-full flex flex-col items-center justify-center" v-if="show_all">
+        <!-- <div class="w-full h-full flex flex-col items-center justify-center" v-if="show_all">
             <h1 class="text-5xl font-bold p-4">
                 This page is currently under development.
             </h1>
             <p class="text-2xl">
                 Coming soon......
             </p>
-        </div>
+        </div> -->
+        <template>
+            
+        </template>
     </transition>
 </template>
 
