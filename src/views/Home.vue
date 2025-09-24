@@ -85,9 +85,9 @@
     // index: 修为周名称
   });
 
-  const remote_server_ipv4 = '60.205.243.107';
-  const get_scores_url = `http://${remote_server_ipv4}/api/get_scores`;
-  const get_records_url = `http://${remote_server_ipv4}/api/get_records`;
+  const remote_server_domain = '60.205.243.107';
+  const get_scores_url = `http://${remote_server_domain}/api/get_scores`;
+  const get_records_url = `http://${remote_server_domain}/api/get_records`;
 
   const scores_ok = ref(false);
   const records_ok = ref(false);

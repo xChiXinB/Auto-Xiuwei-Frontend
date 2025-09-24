@@ -47,7 +47,6 @@
         // 目前不知道怎么稳定在网页刚加载就获取路由
         setTimeout(() => {
             current_router.value = router.currentRoute.value.path;
-            console.log(current_router.value);
         }, 200);
     });
     function alter_router(location: string) {

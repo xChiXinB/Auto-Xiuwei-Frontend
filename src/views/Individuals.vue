@@ -12,7 +12,7 @@
             <!--品字布局-->
             <div class="w-full h-full flex flex-col items-center">
                 <ClassTotal
-                :sum="3"></ClassTotal>
+                :sum="class_total_score"></ClassTotal>
                 <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
                     <canvas ref="canvas"
                     class="w-[90%] lg:w-[60%] h-190"></canvas>
@@ -29,6 +29,7 @@
 <script setup lang="ts">
     import { ref, nextTick, onMounted } from 'vue';
     import Matter from 'matter-js';
+    const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';
     import StudentDetail from '../components/Individuals/StudentDetail.vue';
 
@@ -46,43 +47,52 @@
         time: string;
         xiuwei: number;
         reason: string;
-    };
-    const score_info_of_all: ScoreInfoOfOne[] = [];
-    for (let i = 0; i < 10; i++) {
-        score_info_of_all.push({
-            id: i,
-            student: `Student${i}`,
-            score: Math.floor(Math.random() * 50),
-            details: [
-                {
-                    id: i,
-                    time: new Date().getTime().toString(),
-                    xiuwei: Math.floor((Math.random() * 10) - 5),
-                    reason: `reason ${i}`
-                },
-                {
-                    id: i+1,
-                    time: new Date().getTime().toString(),
-                    xiuwei: Math.floor((Math.random() * 10) - 5),
-                    reason: `reason ${i}(1)`
-                }
-            ]
-        });
-    };
+    }
+    interface Result {
+        class_total_score: number;
+        score_info_of_all: ScoreInfoOfOne[];
+    }
 
-    // 响应式变量
+    // API数据
+    let score_info_of_all: ScoreInfoOfOne[] = [];
+    const class_total_score = ref<number>(0);
+    const remote_server_domain = '60.205.243.107';
+    const get_individuals_url = `http://${remote_server_domain}/api/get_individuals`;
+    onMounted(() => {
+        fetch(get_individuals_url)
+            .then((res: any) => {
+                if (!res.ok) {
+                    throw new Error(res.status);
+                }
+                return res.json();
+            })
+            .then((json_data: Result) => {
+                score_info_of_all = json_data.score_info_of_all;
+                class_total_score.value = json_data.class_total_score;
+
+                w = canvas.value.clientWidth;
+                h = canvas.value.clientHeight;
+                min_score = Math.min(
+                    ...score_info_of_all.map((score) => score.score)
+                );
+                max_score = Math.max(
+                    ...score_info_of_all.map((score) => score.score)
+                );
+                matterJsInit();
+            });
+    });
+
+    // StudentDetail响应式变量
     const show = ref(false);
     const details = ref<Detail[]>([]);
     const score = ref('');
 
     // matter.js所需变量
-    const min_score: number = Math.min(
-        ...score_info_of_all.map((score) => score.score)
-    );
-    const max_score: number = Math.max(
-        ...score_info_of_all.map((score) => score.score)
-    );
-    const min_r = 50;
+    //（所有只let没有赋值的变量，需要fetch后才能定义）
+    let min_score: number;
+    let max_score: number;
+
+    const min_r = 40;
     const max_r = 180;
 
     const canvas = ref();
@@ -90,17 +100,9 @@
 
     let hovered_ball: any = null;
     let selected_ball: any = null;
-    onMounted(() => {
-        setTimeout(() => {
-            w = canvas.value.clientWidth;
-            h = canvas.value.clientHeight;
-            matterJsInit();
-        }, 200);
-    });
 
     function matterJsInit() {
         // matter.js
-        const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
         const engine = Engine.create();
         const render = Render.create({
             engine: engine,
