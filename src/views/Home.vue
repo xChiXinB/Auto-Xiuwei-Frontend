@@ -51,9 +51,9 @@
 </template>
 
 <script setup>
-  import Group from "../components/Group.vue";
-  import SelectBar from "../components/SelectBar.vue";
-  import RecordsTable from "../components/RecordsTable.vue";
+  import Group from "../components/Home/Group.vue";
+  import SelectBar from "../components/Home/SelectBar.vue";
+  import RecordsTable from "../components/Home/RecordsTable.vue";
   import { ref, nextTick } from "vue";
 
   const show_all = ref(false);

@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-  import { ref, defineProps } from "vue";
+  import { ref } from "vue";
 
   const table_head = ref([
       'Time', 'Student', 'XiuWei', 'Reason'

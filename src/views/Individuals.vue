@@ -8,17 +8,247 @@
                 Coming soon......
             </p>
         </div> -->
-        <template>
-            
-        </template>
+        <!-- <template> -->
+            <!--品字布局-->
+            <div class="w-full h-full flex flex-col items-center">
+                <ClassTotal
+                :sum="3"></ClassTotal>
+                <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
+                    <canvas ref="canvas"
+                    class="w-[90%] lg:w-[60%] h-190"></canvas>
+                    <StudentDetail
+                    :show="show"
+                    :details="details"
+                    :score="score"></StudentDetail>
+                </div>
+            </div>
+        <!-- </template> -->
     </transition>
 </template>
 
 <script setup lang="ts">
-    import { ref, nextTick } from 'vue';
+    import { ref, nextTick, onMounted } from 'vue';
+    import Matter from 'matter-js';
+    import ClassTotal from '../components/Individuals/ClassTotal.vue';
+    import StudentDetail from '../components/Individuals/StudentDetail.vue';
 
     const show_all = ref(false);
     nextTick(() => {show_all.value = true});
+
+    interface ScoreInfoOfOne {
+        id: number;
+        student: string;
+        score: number;
+        details: Detail[];
+    }
+    interface Detail {
+        id: number;
+        time: string;
+        xiuwei: number;
+        reason: string;
+    };
+    const score_info_of_all: ScoreInfoOfOne[] = [];
+    for (let i = 0; i < 10; i++) {
+        score_info_of_all.push({
+            id: i,
+            student: `Student${i}`,
+            score: Math.floor(Math.random() * 50),
+            details: [
+                {
+                    id: i,
+                    time: new Date().getTime().toString(),
+                    xiuwei: Math.floor((Math.random() * 10) - 5),
+                    reason: `reason ${i}`
+                },
+                {
+                    id: i+1,
+                    time: new Date().getTime().toString(),
+                    xiuwei: Math.floor((Math.random() * 10) - 5),
+                    reason: `reason ${i}(1)`
+                }
+            ]
+        });
+    };
+
+    // 响应式变量
+    const show = ref(false);
+    const details = ref<Detail[]>([]);
+    const score = ref('');
+
+    // matter.js所需变量
+    const min_score: number = Math.min(
+        ...score_info_of_all.map((score) => score.score)
+    );
+    const max_score: number = Math.max(
+        ...score_info_of_all.map((score) => score.score)
+    );
+    const min_r = 50;
+    const max_r = 180;
+
+    const canvas = ref();
+    let w: number, h: number;
+
+    let hovered_ball: any = null;
+    let selected_ball: any = null;
+    onMounted(() => {
+        setTimeout(() => {
+            w = canvas.value.clientWidth;
+            h = canvas.value.clientHeight;
+            matterJsInit();
+        }, 200);
+    });
+
+    function matterJsInit() {
+        // matter.js
+        const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
+        const engine = Engine.create();
+        const render = Render.create({
+            engine: engine,
+            canvas: canvas.value,
+            options: {
+                width: w,
+                height: h,
+                wireframes: false,
+                background: '#B8E6FE',
+            }
+        });
+        Render.run(render);
+        const runner = Runner.create();
+        Runner.run(runner, engine);
+
+        const balls: any[] = [];
+        for (const score of score_info_of_all) {
+            balls.push(Bodies.circle(
+                // x position, y position, radius
+                w/2, h/2,
+                // ⬇️将圆的半径作为修为的二次函数呈现⬇️
+                // 参见：https://g.co/gemini/share/0315e04d7d24
+                (((max_r-min_r)/Math.pow((max_score-min_score), 2))*Math.pow((score.score-min_score), 2))+min_r,
+                {
+                    restitution: 0.5,
+                    render: {
+                        fillStyle: '#00A6F4',
+                        strokeStyle: '#0084D1',
+                        lineWidth: 10,
+                    },
+                    info: {
+                        name: score.student,
+                        score: score.score,
+                        details: score.details,
+                    },
+                }
+            ));
+        }
+        const ceiling = Bodies.rectangle(
+            // x position, y position, width, height
+            w/2, 0, w, 20, {
+                isStatic: true,
+                render: {
+                    fillStyle: '#0069A8',
+                }
+            }
+        );
+        const ground = Bodies.rectangle(
+            w/2, h, w, 20, {
+                isStatic: true,
+                render: {
+                    fillStyle: '#0069A8',
+                }
+            }
+        );
+        const left_wall = Bodies.rectangle(
+            0, h/2, 20, h, {
+                isStatic: true,
+                render: {
+                    fillStyle: '#0069A8',
+                }
+            }
+        );
+        const right_wall = Bodies.rectangle(
+            w, h/2, 20, h, {
+                isStatic: true,
+                render: {
+                    fillStyle: '#0069A8',
+                }
+            }
+        );
+        World.add(engine.world, [...balls, ground, left_wall, right_wall, ceiling]);
+
+        Events.on(render, "afterRender", () => {
+            const ctx = render.context;
+            balls.forEach((ball) => {
+                ctx.save();
+                // 绘制球形高亮
+                let opacity: number = 0.3;
+                if (selected_ball === null && hovered_ball == null) {
+                    opacity = 1.0
+                } else if (ball === selected_ball || ball === hovered_ball) {
+                    opacity = 1.0;
+                }
+                ctx.globalAlpha = opacity;
+
+                ctx.beginPath();
+                ctx.arc(ball.position.x, ball.position.y, ball.circleRadius, 0, 2*Math.PI);
+                ctx.fillStyle = ball.render.fillStyle;
+                ctx.fill();
+
+                // 绘制球面文字
+                const radius = ball.circleRadius;
+                const text = ball.info.name;
+
+                let font_size = radius * 0.8;
+                ctx.font = `${font_size}px 'Times New Roman'`;
+                const width = ctx.measureText(text).width;
+                if (width > radius * 1.7) {
+                    font_size = font_size * (radius * 1.7 / width);
+                    ctx.font = `${font_size}px 'Times New Roman'`;
+                }
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(text, ball.position.x, ball.position.y);
+                ctx.restore();
+            });
+        });
+
+        render.canvas.addEventListener('mousemove', (e: any) => {
+            const position = {
+                x: e.offsetX,
+                y: e.offsetY,
+            };
+            const target = Query.point(balls, position);
+
+            if (target.length <= 0) {
+                hovered_ball = null;
+                return;
+            }
+            hovered_ball = target[0];
+        });
+        render.canvas.addEventListener('click', (e: any) => {
+            const position = {
+                x: e.offsetX,
+                y: e.offsetY,
+            };
+            const target = Query.point(balls, position);
+
+            if (target.length <= 0) {
+                selected_ball = null; 
+                show.value = false;
+                return;
+            }
+            if (target[0] === selected_ball) {
+                selected_ball = null;
+                show.value = false;
+                return;
+            }
+            selected_ball = target[0];
+            show.value = true;
+
+            details.value = selected_ball.info.details;
+            score.value = `${selected_ball.info.name}: ${selected_ball.info.score}'`;
+        });
+    }
+
 </script>
 
 <style>
