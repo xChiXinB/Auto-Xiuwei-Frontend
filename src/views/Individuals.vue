@@ -126,6 +126,8 @@
             one.score
         );
         const radii = calculate_radii(scores, min_r, w*h*area_percentage, 0.8);
+        console.log(scores);
+        console.log(radii);
 
         const balls: any[] = [];
         let index = 0;
