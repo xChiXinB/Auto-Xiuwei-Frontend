@@ -32,6 +32,7 @@
     const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';
     import StudentDetail from '../components/Individuals/StudentDetail.vue';
+    import { calculate_radii } from '../composables/Individuals/calculate_radii.js';
 
     const show_all = ref(false);
     nextTick(() => {show_all.value = true});
@@ -92,8 +93,8 @@
     let min_score: number;
     let max_score: number;
 
-    const min_r = 40;
-    const max_r = 180;
+    const min_r = 50;    
+    const area_percentage = 0.7854;
 
     const canvas = ref();
     let w: number, h: number;
@@ -118,14 +119,18 @@
         const runner = Runner.create();
         Runner.run(runner, engine);
 
+        // 计算圆的半径
+        const scores = score_info_of_all.map((one) => 
+            one.score
+        );
+        const radii = calculate_radii(scores, min_r, w*h*area_percentage, 0.8);
+
         const balls: any[] = [];
+        let index = 0;
         for (const score of score_info_of_all) {
             balls.push(Bodies.circle(
                 // x position, y position, radius
-                w/2, h/2,
-                // ⬇️将圆的半径作为修为的二次函数呈现⬇️
-                // 参见：https://g.co/gemini/share/0315e04d7d24
-                (((max_r-min_r)/Math.pow((max_score-min_score), 2))*Math.pow((score.score-min_score), 2))+min_r,
+                w/2, h/2, radii[index],
                 {
                     restitution: 0.5,
                     render: {
@@ -140,6 +145,8 @@
                     },
                 }
             ));
+
+            index++;
         }
         const ceiling = Bodies.rectangle(
             // x position, y position, width, height
