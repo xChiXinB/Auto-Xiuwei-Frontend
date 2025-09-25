@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, nextTick, onMounted } from 'vue';
+    import { ref, nextTick, onMounted, onUnmounted } from 'vue';
     import Matter from 'matter-js';
     const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';
@@ -77,13 +77,24 @@
                 max_score = Math.max(
                     ...score_info_of_all.map((score) => score.score)
                 );
-                setTimeout(() => {
-                    w = canvas.value.clientWidth;
-                    h = canvas.value.clientHeight;
-                    matterJsInit();
-                }, 200);
+                matterJsInit();
             });
+
+        window.addEventListener('resize', matterJsReInit);
     });
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', matterJsReInit);
+    });
+
+    // resize的防抖函数
+    let timeout: any;
+    function matterJsReInit() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            matterJsInit();
+        }, 200);
+    }
 
     // StudentDetail响应式变量
     const show = ref(false);
@@ -106,6 +117,9 @@
 
     function matterJsInit() {
         // matter.js
+        w = canvas.value.clientWidth;
+        h = canvas.value.clientHeight;
+
         const engine = Engine.create();
         const render = Render.create({
             engine: engine,

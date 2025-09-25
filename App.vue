@@ -24,7 +24,7 @@
   let w: number = md;
   let timeout: any;
 
-  const collapsed = ref<boolean>(false);
+  const collapsed = ref<boolean>(window.innerWidth < md);
   function collapse() {
     collapsed.value = true;
   }

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl bg-sky-200">
+    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl bg-sky-200 overflow-auto">
         <template v-if="props.show">
             <div class="w-full h-18 rounded-t-4xl bg-blue-400 flex items-center justify-center">
                 <p class="text-4xl font-bold">{{ score }}</p>

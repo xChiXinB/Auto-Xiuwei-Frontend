@@ -50,13 +50,13 @@
         }, 200);
     });
     function alter_router(location: string) {
+        if (window.innerWidth < props.md) {;
+            emit("collapse");
+        }
         // 注意：push是异步函数
         router.push(location)
             .then(() => {
                 current_router.value = router.currentRoute.value.path;
-                
-                if (window.innerWidth >= props.md) return;
-                emit("collapse");
             });
     }
 
