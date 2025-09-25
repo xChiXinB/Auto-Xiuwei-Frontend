@@ -71,8 +71,6 @@
                 score_info_of_all = json_data.score_info_of_all;
                 class_total_score.value = json_data.class_total_score;
 
-                w = canvas.value.clientWidth;
-                h = canvas.value.clientHeight;
                 min_score = Math.min(
                     ...score_info_of_all.map((score) => score.score)
                 );
@@ -80,6 +78,8 @@
                     ...score_info_of_all.map((score) => score.score)
                 );
                 setTimeout(() => {
+                    w = canvas.value.clientWidth;
+                    h = canvas.value.clientHeight;
                     matterJsInit();
                 }, 200);
             });
