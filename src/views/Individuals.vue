@@ -79,7 +79,9 @@
                 max_score = Math.max(
                     ...score_info_of_all.map((score) => score.score)
                 );
-                matterJsInit();
+                setTimeout(() => {
+                    matterJsInit();
+                }, 200);
             });
     });
 
