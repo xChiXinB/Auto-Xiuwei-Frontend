@@ -68,6 +68,7 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
 
     // --- 失败情况 一：面积不足 ($\Delta < 0$) 处理 ---
     if (discriminant < 0) {
+        console.warn('Warning: It is detected that the user\'s screen is too small, which may cause the text on the ball to be unclear.')
         // 忽略原 M 约束，固定 a = a_target，求解 M_new
         a = a_target;
 

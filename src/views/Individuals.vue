@@ -95,7 +95,7 @@
     let min_score: number;
     let max_score: number;
 
-    const min_r = 50;    
+    const min_r = Math.min(50, 0.1 * window.innerWidth);    
     const area_percentage = 0.7854;
 
     const canvas = ref();
@@ -126,8 +126,6 @@
             one.score
         );
         const radii = calculate_radii(scores, min_r, w*h*area_percentage, 0.8);
-        console.log(scores);
-        console.log(radii);
 
         const balls: any[] = [];
         let index = 0;
