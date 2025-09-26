@@ -14,8 +14,13 @@
                 <ClassTotal
                 :sum="class_total_score"></ClassTotal>
                 <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
-                    <canvas ref="canvas"
-                    class="w-[90%] lg:w-[60%] h-190"></canvas>
+                    <div class="flex flex-col w-[90%] lg:w-[60%] mb-4">
+                        <p class="p-2 text-gray-500">
+                            The larger the radius of the ball, the higher the total xiuwei of the corresponding student
+                        </p>
+                        <canvas ref="canvas"
+                        class="w-full h-190"></canvas>
+                    </div>
                     <StudentDetail
                     :show="show"
                     :details="details"
