@@ -82,6 +82,7 @@
         is_disappear.value = true;
         appear_index.value = -1;
 
+        clearInterval(interval_id);
         interval_id = setInterval(() => {
             for (let i = 0; i < card_contents.value.length; i++) {
                 card_contents.value[i] = Math.random().toString().slice(10);
