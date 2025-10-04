@@ -112,7 +112,7 @@
     let max_score: number;
 
     const min_r = Math.min(50, 0.1 * window.innerWidth);    
-    const area_percentage = 0.7854;
+    const area_percentage: number = 0.73;
 
     const canvas = ref();
     let w: number, h: number;

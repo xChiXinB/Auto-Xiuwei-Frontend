@@ -3,7 +3,7 @@
   :is-visible="collapsed"
   @extend="extend"></ToggleSideBar>
 
-  <div class="w-[100px] h-screen bg-green-500 fixed top-0 left-0 transition duration-200 ease-in-out shrink-0"
+  <div class="w-[100px] h-screen fixed top-0 left-0 transition duration-200 ease-in-out shrink-0"
   :class="collapsed && `translate-x-[-100px]`">
     <SideBar @collapse="collapse"
     :md="md"></SideBar>
