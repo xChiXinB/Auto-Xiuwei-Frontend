@@ -18,7 +18,7 @@
     <div class="grid grid-cols-1 w-full overflow-auto">
       <!--表格内容-->
       <div class="grid grid-cols-4 border-b border-b-gray-900 last:border-b-0 hover:font-bold" style="grid-template-columns: 2fr 1fr 1fr 2fr"
-           v-for="(row, index) in props.table_data" :key="index">
+      v-for="(row, index) in props.table_data" :key="index">
         <p class="p-1 text-gray-700 break-words text-center"
              v-for="(data, index) in row" :key="index">
           {{ data }}
