@@ -3,14 +3,14 @@
   :is-visible="collapsed"
   @extend="extend"></ToggleSideBar>
 
-  <div class="w-[100px] h-screen fixed top-0 left-0 transition duration-200 ease-in-out shrink-0"
+  <div class="w-[100px] h-screen sticky top-0 transition duration-200 ease-in-out shrink-0"
   :class="collapsed && `translate-x-[-100px]`">
     <SideBar @collapse="collapse"
     :md="md"></SideBar>
   </div>
 
-  <div class="min-h-full transition duration-200 ease-in-out shrink"
-  :class="collapsed ? `ml-0 w-full` : `ml-[100px] w-[calc(100vw-100px)]`">
+  <div class="min-h-full duration-200 ease-in-out shrink-0" style="transition-property: transform width;"
+  :class="collapsed ? `w-full translate-x-[-100px]` : `w-[calc(100vw-100px)]`">
     <router-view></router-view>
   </div>
 </template>

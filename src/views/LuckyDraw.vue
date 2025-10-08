@@ -23,20 +23,24 @@
                 </div>
             </div>
 
-            <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
-            :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
-            @click="draw()" ref="btn">
-                <p class="text-4xl font-bold">
-                    Tap to draw
-                </p>
-            </div>
-
-            <transition name="hint">
-                <div v-if="show_hint"
-                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300/60 backdrop-blur-sm border-4 border-amber-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
-                    Pick a card!
+            <teleport to="body">
+                <div class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
+                :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
+                @click="draw()" ref="btn">
+                    <p class="text-4xl font-bold">
+                        Tap to draw
+                    </p>
                 </div>
-            </transition>
+            </teleport>
+
+            <teleport to="body">
+                <transition name="hint">
+                    <div v-if="show_hint"
+                    class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300/60 backdrop-blur-sm border-4 border-amber-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
+                        Pick a card!
+                    </div>
+                </transition>
+            </teleport>
         </div>
     </transition>
 </template>

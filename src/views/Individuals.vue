@@ -19,7 +19,7 @@
                             The larger the radius of the ball, the higher the total xiuwei of the corresponding student
                         </p>
                         <canvas ref="canvas"
-                        class="w-full h-190"></canvas>
+                        class="w-full h-190 shrink-0"></canvas>
                     </div>
                     <StudentDetail
                     :show="show"
@@ -122,7 +122,15 @@
 
     function matterJsInit() {
         // matter.js
-        w = canvas.value.clientWidth;
+        // 获取宽度需要区分电脑端和手机端
+        if (window.innerWidth >= 1024) {
+            w = canvas.value.clientWidth;
+        } else {
+            const w_canvas = canvas.value.clientWidth;
+            const w_should = document.body.clientWidth * 0.9;
+
+            w = (Math.abs(w_canvas - w_should) < 5) ? w_canvas : w_should; // 避免正在播放的动画对canvas宽度产生的干扰影响正常宽度的读取
+        }
         h = canvas.value.clientHeight;
 
         const engine = Engine.create();
