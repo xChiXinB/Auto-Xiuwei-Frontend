@@ -1,5 +1,6 @@
 <template>
-    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl bg-sky-200 mb-4 flex flex-col">
+    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl bg-sky-200 mb-4 flex flex-col"
+    ref="main">
         <template v-if="props.show">
             <div class="w-full h-18 rounded-t-4xl bg-blue-400 flex items-center justify-center">
                 <p class="text-4xl font-bold">{{ score }}</p>
@@ -22,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+    import { ref, watch } from 'vue';
+
     interface Detail {
         id: number;
         time: string;
@@ -33,6 +36,15 @@
         show: boolean,
         details: Detail[],
         score: string,
+        clicks: number,
     }>();
+
+    const main = ref();
+    watch(() => props.clicks, (_, __) => {
+        main.value.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
+    });
 
 </script>

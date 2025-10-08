@@ -24,7 +24,8 @@
                     <StudentDetail
                     :show="show"
                     :details="details"
-                    :score="score"></StudentDetail>
+                    :score="score"
+                    :clicks="clicks"></StudentDetail>
                 </div>
             </div>
         <!-- </template> -->
@@ -105,6 +106,7 @@
     const show = ref(false);
     const details = ref<Detail[]>([]);
     const score = ref('');
+    const clicks = ref(0);
 
     // matter.js所需变量
     //（所有只let没有赋值的变量，需要fetch后才能定义）
@@ -122,8 +124,8 @@
 
     function matterJsInit() {
         // matter.js
-        // 获取宽度需要区分电脑端和手机端
-        if (window.innerWidth >= 1024) {
+        // 获取宽度需要区分大小屏幕
+        if (window.innerWidth >= 768) {
             w = canvas.value.clientWidth;
         } else {
             const w_canvas = canvas.value.clientWidth;
@@ -284,6 +286,7 @@
 
             details.value = selected_ball.info.details;
             score.value = `${selected_ball.info.name}: ${selected_ball.info.score}'`;
+            clicks.value++;
         });
     }
 
