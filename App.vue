@@ -11,7 +11,7 @@
 
   <div class="min-h-full duration-200 ease-in-out shrink-0" style="transition-property: transform width;"
   :class="collapsed ? `w-full translate-x-[-100px]` : `w-[calc(100vw-100px)]`">
-    <router-view></router-view>
+    <Transition name="router"><router-view></router-view></Transition>
   </div>
 </template>
 
@@ -59,3 +59,20 @@
   }
 
 </script>
+
+<style>
+  .router-enter-active,
+  .router-leave-active {
+      transition: all 0.1s ease-in;
+  }
+
+  .router-enter-from,
+  .router-leave-to {
+      opacity: 0;
+  }
+
+  .router-enter-to,
+  .router-leave-from {
+    opacity: 1;
+  }
+</style>

@@ -1,33 +1,28 @@
 <template>
   <div class="shadow w-full h-14 overflow-x-auto whitespace-nowrap">
-    <div v-for="(table, index) in props.tables" :key="index"
+    <div v-for="period_id in sorted_periods_id" :key="period_id"
          class="inline-block h-full px-5 border-r-gray-500 border-r-1 last:border-r-0 hover:bg-blue-300 hover:font-bold transition duration-200 ease-in-out"
-         @click="select(index)"
-         :class="selected_index === index ? 'bg-blue-400' : 'bg-blue-200'">
+         @click="select(period_id)"
+         :class="selected_id === period_id ? 'bg-blue-400' : 'bg-blue-200'">
       <div class="flex flex-col justify-center w-full h-full text-3xl text-gray-900">
-        {{ table }}
+        {{ periods[period_id] }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+  import { ref } from 'vue';
+  import { periods } from '../../composables/configurations.mjs'
+  const sorted_periods_id = Object.keys(periods).sort((a, b) => b-a);
 
-  const props = defineProps({
-    tables: {
-      type: Object,
-      required: true,
-    },
-  });
   const emit = defineEmits(["select"]);
 
-  const selected_index = ref(0);
+  const selected_id = ref(sorted_periods_id[0]);
+  emit("select", selected_id.value);
 
   function select(index) {
-    selected_index.value = index;
+    selected_id.value = index;
     emit("select", index);
   }
 </script>
-
-<!-- md:px-0 md:fixed md:top-0 md:right-0 md:z-50 -->
