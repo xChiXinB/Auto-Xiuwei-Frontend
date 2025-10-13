@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-    import { ref, nextTick } from 'vue';
+    import { ref } from 'vue';
 
     const btn = ref(null);
     const is_disappear = ref(false);

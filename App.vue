@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
   import { ref, onMounted, onUnmounted } from 'vue';
-  import SideBar from "./src/components/SideBar.vue";
-  import ToggleSideBar from './src/components/ToggleSideBar.vue';
+  import SideBar from "./src/components/App/SideBar.vue";
+  import ToggleSideBar from './src/components/App/ToggleSideBar.vue';
 
   const md: number = 768;
   let w: number = md;

@@ -1,124 +1,82 @@
 <template>
-        <!-- <div class="w-full h-full flex flex-col items-center justify-center" v-if="show_all">
-            <h1 class="text-5xl font-bold p-4">
-                This page is currently under development.
-            </h1>
-            <p class="text-2xl">
-                Coming soon......
-            </p>
-        </div> -->
-        <!-- <template> -->
-            <!--品字布局-->
-            <div class="w-full min-h-full flex flex-col items-center">
-                <ClassTotal
-                :sum="class_total_score"></ClassTotal>
-                <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
-                    <div class="flex flex-col w-[90%] lg:w-[60%] mb-4">
-                        <p class="p-2 text-gray-500">
-                            The larger the radius of the ball, the higher the total xiuwei of the corresponding student
-                        </p>
-                        <canvas ref="canvas"
-                        class="w-full h-190 shrink-0"></canvas>
-                    </div>
-                    <StudentDetail
-                    :show="show"
-                    :details="details"
-                    :score="score"
-                    :clicks="clicks"></StudentDetail>
-                </div>
+    <div class="w-full min-h-full flex flex-col items-center"
+    v-if="successAPI === successAPITarget">
+        <ClassTotal
+        :sum="class_total_score"></ClassTotal>
+        <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
+            <div class="flex flex-col w-[90%] lg:w-[60%] mb-4">
+                <p class="p-2 text-gray-500">
+                    The larger the radius of the ball, the higher the total xiuwei of the corresponding student
+                </p>
+                <canvas ref="canvas"
+                class="w-full h-190 shrink-0"></canvas>
             </div>
-        <!-- </template> -->
+            <StudentDetail
+            :show="do_show_transactions"
+            :transactions="transactions[selected_user_id]"
+            :user_id="selected_user_id"
+            :clicks="clicks"></StudentDetail>
+        </div>
+    </div>
+    <div v-else-if="successAPI < 0">
+        <FetchUnsuccessful></FetchUnsuccessful>
+    </div>
+    <div v-else>
+        <Loading></Loading>
+    </div>
 </template>
 
-<script setup lang="ts">
-    import { ref, nextTick, onMounted, onUnmounted } from 'vue';
+<script setup lang="js">
+    import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
     import Matter from 'matter-js';
     const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';
     import StudentDetail from '../components/Individuals/StudentDetail.vue';
+    import FetchUnsuccessful from '../components/FetchUnsuccessful.vue';
+    import Loading from '../components/Loading.vue';
     import { calculate_radii } from '../composables/Individuals/calculate_radii.js';
+    import { pre_api, users } from '../composables/configurations.mjs';
 
-    const show_all = ref(false);
-    nextTick(() => {show_all.value = true});
+    // 选中的student_id
+    const selected_user_id = ref();
 
-    interface ScoreInfoOfOne {
-        id: number;
-        student: string;
-        score: number;
-        details: Detail[];
+    // 网络请求状态
+    function handle_e() {
+        successAPI.value = -100;   
     }
-    interface Detail {
-        id: number;
-        time: string;
-        xiuwei: number;
-        reason: string;
-    }
-    interface Result {
-        class_total_score: number;
-        score_info_of_all: ScoreInfoOfOne[];
-    }
+    const successAPI = ref(0);
+    const successAPITarget = 2;
 
-    // API数据
-    let score_info_of_all: ScoreInfoOfOne[] = [];
-    const class_total_score = ref<number>(0);
-    const remote_server_domain = '60.205.243.107';
-    const get_individuals_url = `http://${remote_server_domain}/api/get_individuals`;
-    onMounted(() => {
-        fetch(get_individuals_url)
-            .then((res: any) => {
-                if (!res.ok) {
-                    throw new Error(res.status);
-                }
-                return res.json();
-            })
-            .then((json_data: Result) => {
-                score_info_of_all = json_data.score_info_of_all;
-                class_total_score.value = json_data.class_total_score;
+    // 发送网络请求
+    let transactions = ref();
+    fetch(`${pre_api}/ibt`).then(r => 
+        r.json()
+    ).then(res => {
+        transactions.value = res;
+        successAPI.value++;
+    }).catch(_ => handle_e());
 
-                min_score = Math.min(
-                    ...score_info_of_all.map((score) => score.score)
-                );
-                max_score = Math.max(
-                    ...score_info_of_all.map((score) => score.score)
-                );
-                matterJsInit();
-            });
+    let class_total_score = ref();
+    fetch(`${pre_api}/total_score`).then(r => 
+        r.json()
+    ).then(res => {
+        class_total_score.value = res[0];
+        successAPI.value++;
+    }).catch(_ => handle_e());
 
-        window.addEventListener('resize', matterJsReInit);
-    });
-
-    onUnmounted(() => {
-        window.removeEventListener('resize', matterJsReInit);
-    });
-
-    // resize的防抖函数
-    let timeout: any;
-    function matterJsReInit() {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            matterJsInit();
-        }, 200);
-    }
-
-    // StudentDetail响应式变量
-    const show = ref(false);
-    const details = ref<Detail[]>([]);
-    const score = ref('');
-    const clicks = ref(0);
+    // StudentDetail子组件额外响应式变量
+    const do_show_transactions = ref(false);
+    const clicks = ref(0); // 球被点击的次数
 
     // matter.js所需变量
-    //（所有只let没有赋值的变量，需要fetch后才能定义）
-    let min_score: number;
-    let max_score: number;
-
     const min_r = Math.min(50, 0.1 * window.innerWidth);    
-    const area_percentage: number = 0.73;
+    const area_percentage = 0.73;
 
     const canvas = ref();
-    let w: number, h: number;
+    let w, h;
 
-    let hovered_ball: any = null;
-    let selected_ball: any = null;
+    let hovered_ball = null;
+    let selected_ball = null;
 
     function matterJsInit() {
         // matter.js
@@ -133,6 +91,7 @@
         }
         h = canvas.value.clientHeight;
 
+        // 初始化组件
         const engine = Engine.create();
         const render = Render.create({
             engine: engine,
@@ -148,18 +107,25 @@
         const runner = Runner.create();
         Runner.run(runner, engine);
 
-        // 计算圆的半径
-        const scores = score_info_of_all.map((one) => 
-            one.score
-        );
-        const radii = calculate_radii(scores, min_r, w*h*area_percentage, 0.8);
+        /* 遍历目标：
+        { student_id: total_score }
+        */
+        const user_id2total_score = {};
+        for (const user_id in transactions.value) {
+            user_id2total_score[user_id] = Object.values(transactions.value[user_id]).map(i => 
+                i.variation
+            ).reduce((a, b) => a+b, 0);
+        }
+        // 为了确保顺序性
+        const id2score_id = Object.keys(user_id2total_score);
+        const id2score_score = Object.values(user_id2total_score);
+        const radii = calculate_radii(id2score_score, min_r, w*h*area_percentage, 0.8);
 
-        const balls: any[] = [];
-        let index = 0;
-        for (const score of score_info_of_all) {
+        const balls = [];
+        id2score_id.forEach((id) => {
             balls.push(Bodies.circle(
                 // x position, y position, radius
-                w/2, h/2, radii[index],
+                w/2, h/2, radii[id],
                 {
                     restitution: 0.5,
                     render: {
@@ -168,15 +134,12 @@
                         lineWidth: 10,
                     },
                     info: {
-                        name: score.student,
-                        score: score.score,
-                        details: score.details,
+                        user_id: id,
+                        name: users[id],
                     },
                 }
             ));
-
-            index++;
-        }
+        });
         const ceiling = Bodies.rectangle(
             // x position, y position, width, height
             w/2, 0, w, 20, {
@@ -217,7 +180,7 @@
             balls.forEach((ball) => {
                 ctx.save();
                 // 绘制球形高亮
-                let opacity: number = 0.3;
+                let opacity = 0.3;
                 if (selected_ball === null && hovered_ball == null) {
                     opacity = 1.0
                 } else if (ball === selected_ball || ball === hovered_ball) {
@@ -249,7 +212,7 @@
             });
         });
 
-        render.canvas.addEventListener('mousemove', (e: any) => {
+        render.canvas.addEventListener('mousemove', (e) => {
             const position = {
                 x: e.offsetX,
                 y: e.offsetY,
@@ -262,7 +225,7 @@
             }
             hovered_ball = target[0];
         });
-        render.canvas.addEventListener('click', (e: any) => {
+        render.canvas.addEventListener('click', (e) => {
             const position = {
                 x: e.offsetX,
                 y: e.offsetY,
@@ -271,21 +234,45 @@
 
             if (target.length <= 0) {
                 selected_ball = null; 
-                show.value = false;
+                do_show_transactions.value = false;
                 return;
             }
             if (target[0] === selected_ball) {
                 selected_ball = null;
-                show.value = false;
+                do_show_transactions.value = false;
                 return;
             }
             selected_ball = target[0];
-            show.value = true;
 
-            details.value = selected_ball.info.details;
-            score.value = `${selected_ball.info.name}: ${selected_ball.info.score}'`;
+            do_show_transactions.value = true;
+            selected_user_id.value = selected_ball.info.user_id;
+
             clicks.value++;
         });
+    }
+
+    // 初始化
+    watch(() => successAPI.value, (_new, _old) => {
+        if (_new === successAPITarget) {
+            nextTick(() => {
+                matterJsInit();
+            });
+        };
+    });
+
+    // 窗口大小变化（含防抖）
+    onMounted(() => {
+        window.addEventListener('resize', matterJsReInit);
+    });
+    onUnmounted(() => {
+        window.removeEventListener('resize', matterJsReInit);
+    });
+    let timeout;
+    function matterJsReInit() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            matterJsInit();
+        }, 200);
     }
 
 </script>

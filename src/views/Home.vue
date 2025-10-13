@@ -24,22 +24,10 @@
         <!--品字布局 ⬆️-->
       </template>
       <template v-else-if="successAPI < 0">
-        <div class="w-full h-full flex flex-col items-center justify-center">
-          <h1 class="text-5xl font-bold p-4">
-            We are unable to fetch your data.
-          </h1>
-          <div class="flex flex-wrap p-6">
-            <p class="text-2xl">
-              Please check your network, or
-              <span class="underline hover:text-blue-950" @click="refresh">
-                refresh</span>
-              the page.
-            </p>
-          </div>
-        </div>
+        <FetchUnsuccessful></FetchUnsuccessful>
       </template>
       <template v-else>
-        <h1 class="text-6xl font-bold absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">Please wait...</h1>
+        <Loading></Loading>
       </template>
     </Transition>
   </div>
@@ -49,10 +37,10 @@
   import Group from "../components/Home/Group.vue";
   import SelectBar from "../components/Home/SelectBar.vue";
   import RecordsTable from "../components/Home/RecordsTable.vue";
+  import FetchUnsuccessful from "../components/FetchUnsuccessful.vue";
+  import Loading from "../components/Loading.vue";
   import { ref } from "vue";
   import { pre_api } from "../composables/configurations.mjs";
-
-  function refresh() {window.location.reload();}
 
   // 选中的period_id
   let selected_period_id = ref(0);
@@ -63,7 +51,6 @@
 
   // 网络请求状态
   function handle_e() {
-    console.error('错误函数被触发')
     successAPI.value = -100
   }
   const successAPI = ref(0);

@@ -3,17 +3,29 @@
     ref="main">
         <template v-if="props.show">
             <div class="w-full h-18 rounded-t-4xl bg-blue-400 flex items-center justify-center">
-                <p class="text-4xl font-bold">{{ score }}</p>
+                <p class="text-4xl font-bold">
+                    {{ users[user_id] }}: {{ Object.values(transactions).map(val => val.variation).reduce((a, b) => a+b, 0).toFixed(2) }}'
+                </p>
             </div>
             <div class="w-full overflow-auto">
-                <div v-for="detail in props.details" :key="detail.id"
+                <div v-for="(transaction, transaction_id) in props.transactions" :key="transaction_id"
                 class="w-full border-b-2 border-gray-600 last:border-b-0 p-2 text-center hover:font-bold">
-                    {{ `${detail.time}, ${detail.xiuwei >= 0 ? `+` : ``}${detail.xiuwei} because ${detail.reason}`}}
+                    <span v-for="(data, key) in transaction" :key="key">
+                        <template v-if="key == 'time'">
+                            {{ new Date(data * 1000).toLocaleString() }},
+                        </template>
+                        <template v-else-if="key == 'variation'">
+                            {{ data >= 0 ? `+` : `` }}{{ data }}
+                        </template>
+                        <template v-else>
+                            because {{ data }}
+                        </template>
+                    </span>
                 </div>
             </div>
         </template>
         <template v-else>
-            <div class="w-full h-full flex flex-col items-center justify-center">
+            <div class="w-full h-full flex-1 flex flex-col items-center justify-center">
                 <h1 class="text-3xl font-bold p-4 text-black/50">
                     Click on a ball to see details.
                 </h1>
@@ -24,18 +36,18 @@
 
 <script setup lang="ts">
     import { ref, watch } from 'vue';
-
-    interface Detail {
-        id: number;
-        time: string;
-        xiuwei: number;
-        reason: string;
-    };
+    import { users } from '../../composables/configurations.mjs';
 
     const props = defineProps<{
         show: boolean,
-        details: Detail[],
-        score: string,
+        transactions: Object,
+        // 1: {
+        //     time: 1760140343,
+        //     variation: -1,
+        //     reason: "迟到",
+        // }, 
+        // 2: { time: ...... }
+        user_id: number,
         clicks: number,
     }>();
 
