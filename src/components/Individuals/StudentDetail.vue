@@ -8,9 +8,9 @@
                 </p>
             </div>
             <div class="w-full overflow-auto">
-                <div v-for="(transaction, transaction_id) in props.transactions" :key="transaction_id"
+                <div v-for="transaction_id in sorted_transaction_id" :key="transaction_id"
                 class="w-full border-b-2 border-gray-600 last:border-b-0 p-2 text-center hover:font-bold">
-                    <span v-for="(data, key) in transaction" :key="key">
+                    <span v-for="(data, key) in props.transactions[transaction_id]" :key="key">
                         <template v-if="key == 'time'">
                             {{ new Date(data * 1000).toLocaleString() }},
                         </template>
@@ -38,18 +38,30 @@
     import { ref, watch } from 'vue';
     import { users } from '../../composables/configurations.mjs';
 
-    const props = defineProps<{
-        show: boolean,
-        transactions: Object,
+    const props = defineProps({
+        show: {
+            type: Object,
+            required: true,
+        },
+        transactions: {
+            type: Object,
+            required: true,
+        },
         // 1: {
         //     time: 1760140343,
         //     variation: -1,
         //     reason: "迟到",
         // }, 
         // 2: { time: ...... }
-        user_id: number,
-        clicks: number,
-    }>();
+        user_id: {
+            type: Number,
+            required: true,
+        },
+        clicks: {
+            type: Number,
+            required: true,
+        },
+    });
 
     const main = ref();
     watch(() => props.clicks, (_, __) => {
@@ -59,4 +71,8 @@
         });
     });
 
+    let sorted_transaction_id;
+    watch(() => props.transactions, () => {
+        sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => a-b);
+    });
 </script>

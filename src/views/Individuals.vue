@@ -134,7 +134,7 @@
                         lineWidth: 10,
                     },
                     info: {
-                        user_id: id,
+                        user_id: +id,
                         name: users[id],
                     },
                 }

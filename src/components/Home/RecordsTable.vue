@@ -18,9 +18,9 @@
     <div class="grid grid-cols-1 w-full overflow-auto">
       <!--表格内容-->
       <div class="grid grid-cols-4 border-b border-b-gray-900 last:border-b-0 hover:font-bold" style="grid-template-columns: 2fr 1fr 1fr 2fr"
-      v-for="(transaction, transaction_id) in props.transactions" :key="transaction_id">
+      v-for="transaction_id in sorted_transaction_id" :key="transaction_id">
         <p class="p-1 text-gray-700 break-words text-center"
-        v-for="(data, key) in transaction" :key="key">
+        v-for="(data, key) in props.transactions[transaction_id]" :key="key">
           <template v-if="key == 'time'">
             <!--数据库返回的时间戳是秒级的-->
             {{ new Date(data * 1000).toLocaleString() }}
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
+  import { ref, watch } from "vue";
   import { users } from "../../composables/configurations.mjs";
 
   const table_head = ref([
@@ -60,5 +60,10 @@
       // },
       required: true
     },
-  })
+  });
+
+  let sorted_transaction_id;
+  watch(() => props.transactions, () => {
+    sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => a-b);
+  });
 </script>

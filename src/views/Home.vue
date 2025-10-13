@@ -45,7 +45,6 @@
   // 选中的period_id
   let selected_period_id = ref(0);
   function handle_select(id) {
-    console.log(id)
     selected_period_id.value = id;
   }
 

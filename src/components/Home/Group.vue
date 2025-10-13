@@ -29,6 +29,4 @@
   });
 
   const sorted_group_id = Object.keys(props.groups).sort((a, b) => a-b);
-
-  console.log(props.groups);
 </script>
