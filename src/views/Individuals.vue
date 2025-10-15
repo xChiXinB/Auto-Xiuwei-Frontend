@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full min-h-full flex flex-col items-center"
+    <div class="w-full min-h-full flex flex-col items-center big-bg"
     v-if="successAPI === successAPITarget">
         <ClassTotal
         :sum="class_total_score"></ClassTotal>

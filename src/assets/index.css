@@ -1,5 +1,164 @@
 @import "tailwindcss";
 
+
+/* All colors below come from Tailwind CSS:
+https://tailwindcss.uihtm.com/docs/colors/ */
+
+/* {
+    --big-bg: ;
+
+    --color-200: ;
+    --color-300: ;
+    --color-400: ;
+    --color-500: ;
+    --color-600: ;
+
+    --secondary-color-200: ;
+    --secondary-color-300: ;
+    --secondary-color-400: ;
+    --secondary-color-500: ;
+    --secondary-color-600: ;
+} */
+
+.pink {
+    --big-bg: oklch(89.9% 0.061 343.231);
+
+    --color-200: oklch(90.3% 0.076 319.62);
+    --color-300: oklch(83.3% 0.145 321.434);
+    --color-400: oklch(74% 0.238 322.16);
+    --color-500: oklch(66.7% 0.295 322.15);
+    --color-600: oklch(59.1% 0.293 322.896);
+
+    --secondary-color-200: oklch(90.5% 0.093 164.15);
+    --secondary-color-300: oklch(84.5% 0.143 164.978);
+    --secondary-color-400: oklch(76.5% 0.177 163.223);
+    --secondary-color-500: oklch(69.6% 0.17 162.48);
+    --secondary-color-600: oklch(59.6% 0.145 163.225);
+}
+
+.blue {
+    /* 大背景色 */
+    --big-bg: oklch(90.1% 0.058 230.902);
+
+    /* 主色 */
+    --color-200: oklch(88.2% 0.059 254.128);
+    --color-300: oklch(80.9% 0.105 251.813);
+    --color-400: oklch(70.7% 0.165 254.624);
+    --color-500: oklch(62.3% 0.214 259.815);
+    --color-600: oklch(54.6% 0.245 262.881);
+
+    /* 副色（对比色） */
+    --secondary-color-200: oklch(92.4% 0.12 95.746);
+    --secondary-color-300: oklch(87.9% 0.169 91.605);
+    --secondary-color-400: oklch(82.8% 0.189 84.429);
+    --secondary-color-500: oklch(76.9% 0.188 70.08);
+    --secondary-color-600: oklch(66.6% 0.179 58.318);
+}
+
+.big-bg {
+    background-color: var(--big-bg);
+}
+
+.bg-200 {
+    background-color: var(--color-200);
+}
+
+.bg-300 {
+    background-color: var(--color-300);
+}
+
+.bg-400 {
+    background-color: var(--color-400);
+}
+
+.bg-500 {
+    background-color: var(--color-500);
+}
+
+.bg-600 {
+    background-color: var(--color-600);
+}
+
+.hover\:bg-200:hover {
+    background-color: var(--color-200);
+}
+
+.hover\:bg-300:hover {
+    background-color: var(--color-300);
+}
+
+.hover\:bg-400:hover {
+    background-color: var(--color-400);
+}
+
+.hover\:bg-500:hover {
+    background-color: var(--color-500);
+}
+
+.hover\:bg-600:hover {
+    background-color: var(--color-600);
+}
+
+.bg-sec-200 {
+    background-color: var(--secondary-color-200);
+}
+
+.bg-sec-300 {
+    background-color: var(--secondary-color-300);
+}
+
+.bg-sec-400 {
+    background-color: var(--secondary-color-400);
+}
+
+.bg-sec-500 {
+    background-color: var(--secondary-color-500);
+}
+
+.bg-sec-600 {
+    background-color: var(--secondary-color-600);
+}
+
+.border-color-200 {
+    border-color: var(--color-200);
+}
+
+.border-color-300 {
+    border-color: var(--color-300);
+}
+
+.border-color-400 {
+    border-color: var(--color-400);
+}
+
+.border-color-500 {
+    border-color: var(--color-500);
+}
+
+.border-color-600 {
+    border-color: var(--color-600);
+}
+
+.border-sec-color-200 {
+    border-color: var(--secondary-color-200);
+}
+
+.border-sec-color-300 {
+    border-color: var(--secondary-color-300);
+}
+
+.border-sec-color-400 {
+    border-color: var(--secondary-color-400);
+}
+
+.border-sec-color-500 {
+    border-color: var(--secondary-color-500);
+}
+
+.border-sec-color-600 {
+    border-color: var(--secondary-color-600);
+}
+
 body {
     height: 100vh;
 }

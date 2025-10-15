@@ -1,6 +1,5 @@
 <template>
-  <div class="w-full min-h-full"
-  :class="successAPI < 0 ? `bg-gray-400 flex items-center justify-center` : `bg-sky-200`">
+  <div class="w-full min-h-full big-bg">
     <Transition name="content">
       <template v-if="successAPI === successAPITarget">
         <!--品字布局 ⬇️-->

@@ -1,10 +1,10 @@
 <template>
-    <div class="w-full min-h-full">
+    <div class="w-full min-h-full big-bg">
         <div class="w-full h-14 shadow overflow-x-auto whitespace-nowrap">
             <div v-for="(contents, title) in all_contents" :key="title"
-            class="inline-block h-full p-2 hover:bg-blue-300 hover:font-bold border-r-2 border-gray-400 last:border-r-0 transition duration-200 ease-in-out"
+            class="inline-block h-full p-2 hover:bg-300 hover:font-bold border-r-2 border-gray-400 last:border-r-0 transition duration-200 ease-in-out"
             @click="select(title)"
-            :class="selected_title === title ? 'bg-blue-400' : 'bg-blue-200'">
+            :class="selected_title === title ? 'bg-400' : 'bg-200'">
                 <div class="flex items-center justify-center w-full h-full text-3xl text-gray-900">
                     {{ title }}
                 </div>
@@ -13,7 +13,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-items-center w-[100%] mb-40">
             <div v-for="(content, index) in card_contents" :key="index"
-            class="bg-blue-300 rounded-2xl w-[90%] h-20 border-6 border-blue-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
+            class="bg-300 rounded-2xl w-[90%] h-20 border-6 border-color-400 shadow-md mt-2 mb-2 flex justify-center items-center hover:-translate-y-2 transition duration-200 ease-in-out"
             @click="(is_disappear && (appear_index === -1)) && click_card(index)">
                 <p class="text-3xl transition duration-500"
                 :class="(is_disappear && (appear_index !== index)) ? 'blur-sm' : ''">
@@ -35,7 +35,7 @@
         <teleport to="body">
             <transition name="hint">
                 <div v-if="show_hint"
-                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 bg-yellow-300/60 backdrop-blur-sm border-4 border-amber-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
+                class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 opacity-60 bg-sec-300 backdrop-blur-sm border-4 border-sec-color-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
                     Pick a card!
                 </div>
             </transition>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-blue-300 rounded-2xl p-4 items-center justify-center
+  <div class="flex flex-col bg-300 rounded-2xl p-4 items-center justify-center
   hover:shadow-lg hover:-translate-y-2 transition duration-200 ease-in-out"
   v-for="group_id in sorted_group_id" :key="group_id">
     <h2 class="text-4xl font-extrabold text-center break-words mb-2.5">

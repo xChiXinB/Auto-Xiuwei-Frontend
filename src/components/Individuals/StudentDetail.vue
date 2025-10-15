@@ -1,8 +1,8 @@
 <template>
-    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl bg-sky-200 mb-4 flex flex-col"
+    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl big-bg mb-4 flex flex-col"
     ref="main">
         <template v-if="props.show">
-            <div class="w-full h-18 rounded-t-4xl bg-blue-400 flex items-center justify-center">
+            <div class="w-full h-18 rounded-t-4xl bg-400 flex items-center justify-center">
                 <p class="text-4xl font-bold">
                     {{ users[user_id] }}: {{ Object.values(transactions).map(val => val.variation).reduce((a, b) => a+b, 0).toFixed(2) }}'
                 </p>

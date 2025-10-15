@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full flex flex-col items-center justify-center">
+    <div class="w-full h-screen flex flex-col bg-gray-400 items-center justify-center">
         <h1 class="text-5xl font-bold p-4">
         We are unable to fetch your data.
         </h1>
