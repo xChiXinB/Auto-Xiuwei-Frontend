@@ -40,7 +40,7 @@
         { id: 0, url: '/icons/dashboard.png', text: 'Dashboard', router: '/' },
         { id: 1, url: '/icons/individuals.png', text: 'Individuals', router: '/individuals' },
         { id: 2, url: '/icons/lucky-draw.png', text: 'Lucky Draw', router: '/lucky-draw' },
-        { id: 3, url: '/icons/dashboard.png', text: 'Settings', router: '/settings' }
+        { id: 3, url: '/icons/settings.png', text: 'Settings', router: '/settings' }
     ]
 
     const current_router = ref<string>("");
