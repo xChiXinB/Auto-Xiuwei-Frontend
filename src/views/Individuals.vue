@@ -35,7 +35,7 @@
     import FetchUnsuccessful from '../components/FetchUnsuccessful.vue';
     import Loading from '../components/Loading.vue';
     import { calculate_radii } from '../composables/Individuals/calculate_radii.js';
-    import { pre_api, users } from '../composables/configurations.mjs';
+    import { pre_api, users, colors } from '../composables/configurations.mjs';
 
     // 选中的student_id
     const selected_user_id = ref();
@@ -79,6 +79,7 @@
     let selected_ball = null;
 
     function matterJsInit() {
+        const style = localStorage.getItem('style');
         // matter.js
         // 获取宽度需要区分大小屏幕
         if (window.innerWidth >= 768) {
@@ -100,7 +101,7 @@
                 width: w,
                 height: h,
                 wireframes: false,
-                background: '#B8E6FE',
+                background: colors[style].bg,
             }
         });
         Render.run(render);
@@ -129,8 +130,8 @@
                 {
                     restitution: 0.5,
                     render: {
-                        fillStyle: '#00A6F4',
-                        strokeStyle: '#0084D1',
+                        fillStyle: colors[style].content,
+                        strokeStyle: colors[style].smBorder,
                         lineWidth: 10,
                     },
                     info: {
@@ -145,7 +146,7 @@
             w/2, 0, w, 20, {
                 isStatic: true,
                 render: {
-                    fillStyle: '#0069A8',
+                    fillStyle: colors[style].bgBorder,
                 }
             }
         );
@@ -153,7 +154,7 @@
             w/2, h, w, 20, {
                 isStatic: true,
                 render: {
-                    fillStyle: '#0069A8',
+                    fillStyle: colors[style].bgBorder,
                 }
             }
         );
@@ -161,7 +162,7 @@
             0, h/2, 20, h, {
                 isStatic: true,
                 render: {
-                    fillStyle: '#0069A8',
+                    fillStyle: colors[style].bgBorder,
                 }
             }
         );
@@ -169,7 +170,7 @@
             w, h/2, 20, h, {
                 isStatic: true,
                 render: {
-                    fillStyle: '#0069A8',
+                    fillStyle: colors[style].bgBorder,
                 }
             }
         );
