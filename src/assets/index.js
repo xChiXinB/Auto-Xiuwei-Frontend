@@ -8,3 +8,4 @@ createApp(App).use(router).mount("#app");
 if (localStorage.getItem('style') == undefined) {
     localStorage.setItem('style', 'blue');
 }
+document.body.className = localStorage.getItem('style');
