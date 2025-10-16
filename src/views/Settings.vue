@@ -22,5 +22,6 @@
 
     watch(style, (_new, _old) => {
         document.body.className = _new;
+        localStorage.setItem('style', _new);
     });
 </script>
