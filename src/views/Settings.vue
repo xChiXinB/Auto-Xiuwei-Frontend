@@ -17,8 +17,8 @@
     import { ref, watch } from 'vue';
 
     const style = ref();
-    style.value = 'blue';
-    document.body.className = 'blue';
+    style.value = localStorage.getItem('style');
+    document.body.className = style.value;
 
     watch(style, (_new, _old) => {
         document.body.className = _new;
