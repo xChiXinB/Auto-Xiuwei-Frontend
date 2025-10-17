@@ -9,3 +9,7 @@ if (localStorage.getItem('style') == undefined) {
     localStorage.setItem('style', 'blue');
 }
 document.body.className = localStorage.getItem('style');
+
+if (localStorage.getItem('order') == undefined) {
+    localStorage.setItem('order', '1');
+}

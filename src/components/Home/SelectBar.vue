@@ -14,11 +14,15 @@
 <script setup>
   import { ref } from 'vue';
   import { periods } from '../../composables/configurations.mjs'
-  const sorted_periods_id = Object.keys(periods).sort((a, b) => b-a);
+  const sorted_periods_id = Object.keys(periods).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
 
   const emit = defineEmits(["select"]);
 
-  const selected_id = ref(sorted_periods_id[0]);
+  const selected_id = ref(sorted_periods_id[
+    localStorage.getItem('order') === '1'
+    ? sorted_periods_id.length - 1
+    : 0
+  ]);
   emit("select", selected_id.value);
 
   function select(index) {

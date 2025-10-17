@@ -64,6 +64,6 @@
 
   let sorted_transaction_id;
   watch(() => props.transactions, () => {
-    sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => a-b);
+    sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
   });
 </script>
