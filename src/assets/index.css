@@ -55,6 +55,22 @@ https://tailwindcss.uihtm.com/docs/colors/ */
     --secondary-color-600: oklch(66.6% 0.179 58.318);
 }
 
+.green {
+    --big-bg: oklch(96.2% 0.044 156.743);
+
+    --color-200: oklch(90.5% 0.093 164.15);
+    --color-300: oklch(84.5% 0.143 164.978);
+    --color-400: oklch(76.5% 0.177 163.223);
+    --color-500: oklch(69.6% 0.17 162.48);
+    --color-600: oklch(59.6% 0.145 163.225);
+
+    --secondary-color-200: oklch(90.3% 0.076 319.62);
+    --secondary-color-300: oklch(83.3% 0.145 321.434);
+    --secondary-color-400: oklch(74% 0.238 322.16);
+    --secondary-color-500: oklch(66.7% 0.295 322.15);
+    --secondary-color-600: oklch(59.1% 0.293 322.896);
+}
+
 .big-bg {
     background-color: var(--big-bg);
 }

@@ -9,6 +9,9 @@
 
             <input type="radio" name="style" value="pink" v-model="style"></input>
             <span class="px-3 text-pink-500 text-2xl font-extrabold">Pink</span>
+
+            <input type="radio" name="style" value="green" v-model="style"></input>
+            <span class="px-3 text-green-500 text-2xl font-extrabold">Green</span>
         </div>
 
         <h1 class="text-3xl font-bold">

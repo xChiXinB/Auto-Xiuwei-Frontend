@@ -35,7 +35,7 @@
     import FetchUnsuccessful from '../components/FetchUnsuccessful.vue';
     import Loading from '../components/Loading.vue';
     import { calculate_radii } from '../composables/Individuals/calculate_radii.js';
-    import { pre_api, users, colors } from '../composables/configurations.mjs';
+    import { pre_api, users } from '../composables/configurations.mjs';
 
     // 选中的student_id
     const selected_user_id = ref();
@@ -79,7 +79,7 @@
     let selected_ball = null;
 
     function matterJsInit() {
-        const style = localStorage.getItem('style');
+        const CSSStyleDecoration = window.getComputedStyle(document.body);
         // matter.js
         // 获取宽度需要区分大小屏幕
         if (window.innerWidth >= 768) {
@@ -101,7 +101,7 @@
                 width: w,
                 height: h,
                 wireframes: false,
-                background: colors[style].bg,
+                background: CSSStyleDecoration.getPropertyValue("--big-bg"),
             }
         });
         Render.run(render);
@@ -130,8 +130,8 @@
                 {
                     restitution: 0.5,
                     render: {
-                        fillStyle: colors[style].content,
-                        strokeStyle: colors[style].smBorder,
+                        fillStyle: CSSStyleDecoration.getPropertyValue("--color-300"),
+                        strokeStyle: CSSStyleDecoration.getPropertyValue("--color-400"),
                         lineWidth: 10,
                     },
                     info: {
@@ -141,12 +141,13 @@
                 }
             ));
         });
+        const border_color = CSSStyleDecoration.getPropertyValue("--color-500");
         const ceiling = Bodies.rectangle(
             // x position, y position, width, height
             w/2, 0, w, 20, {
                 isStatic: true,
                 render: {
-                    fillStyle: colors[style].bgBorder,
+                    fillStyle: border_color,
                 }
             }
         );
@@ -154,7 +155,7 @@
             w/2, h, w, 20, {
                 isStatic: true,
                 render: {
-                    fillStyle: colors[style].bgBorder,
+                    fillStyle: border_color,
                 }
             }
         );
@@ -162,7 +163,7 @@
             0, h/2, 20, h, {
                 isStatic: true,
                 render: {
-                    fillStyle: colors[style].bgBorder,
+                    fillStyle: border_color,
                 }
             }
         );
@@ -170,7 +171,7 @@
             w, h/2, 20, h, {
                 isStatic: true,
                 render: {
-                    fillStyle: colors[style].bgBorder,
+                    fillStyle: border_color,
                 }
             }
         );
