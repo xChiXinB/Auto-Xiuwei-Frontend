@@ -15,10 +15,10 @@
             Display Order of XiuWei Records
         </h1>
         <div class="w-full h-auto flex flex-row p-3">
-            <input type="radio" name="style" value="1" v-model="order"></input>
+            <input type="radio" name="order" value="1" v-model="order"></input>
             <span class="px-3 text-2xl font-extrabold">Chronological order</span>
 
-            <input type="radio" name="style" value="-1" v-model="order"></input>
+            <input type="radio" name="order" value="-1" v-model="order"></input>
             <span class="px-3 text-2xl font-extrabold">Reverse chronological order</span>
         </div>
     </div>
