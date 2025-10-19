@@ -1,34 +1,30 @@
 <template>
-  <div class="w-full min-h-full big-bg">
-    <Transition name="content">
-      <template v-if="successAPI === successAPITarget">
-        <!--品字布局 ⬇️-->
-        <div class="w-full h-full flex flex-col">
-          <!--品字上面的口 ⬇️-->        <!--周修为选择栏-->
-          <SelectBar @select="handle_select"></SelectBar>
-          <!--品字下面的吅 ⬇️--> <!--小组修为展示 | 修为详细记录-->
-          <!--在竖屏平板和手机上，“吅”会变成“吕”-->
-          <div class="flex flex-col lg:flex-row items-center lg:justify-center h-auto my-5">
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 m-8 w-[90%] lg:w-[50%]">
-              <Group
-                :groups="scores[selected_period_id]"
-              ></Group>
-            </div>
-
-            <RecordsTable
-              :transactions="transactions[selected_period_id]"
-            ></RecordsTable>
-          </div>
+  <div class="w-full min-h-full big-bg" v-if="successAPI === successAPITarget">
+    <!--品字布局 ⬇️-->
+    <div class="w-full h-full flex flex-col">
+      <!--品字上面的口 ⬇️-->        <!--周修为选择栏-->
+      <SelectBar @select="handle_select"></SelectBar>
+      <!--品字下面的吅 ⬇️--> <!--小组修为展示 | 修为详细记录-->
+      <!--在竖屏平板和手机上，“吅”会变成“吕”-->
+      <div class="flex flex-col lg:flex-row items-center lg:justify-center h-auto my-5">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 m-8 w-[90%] lg:w-[50%]">
+          <Group
+            :groups="scores[selected_period_id]"
+          ></Group>
         </div>
-        <!--品字布局 ⬆️-->
-      </template>
-      <template v-else-if="successAPI < 0">
-        <FetchUnsuccessful></FetchUnsuccessful>
-      </template>
-      <template v-else>
-        <Loading></Loading>
-      </template>
-    </Transition>
+
+        <RecordsTable
+          :transactions="transactions[selected_period_id]"
+        ></RecordsTable>
+      </div>
+    </div>
+    <!--品字布局 ⬆️-->
+  </div>
+  <div v-else-if="successAPI < 0">
+    <FetchUnsuccessful></FetchUnsuccessful>
+  </div>
+  <div v-else>
+    <Loading></Loading>
   </div>
 </template>
 
@@ -71,15 +67,3 @@
     successAPI.value++;
   }).catch(_ => handle_e())
 </script>
-
-<style>
-  .content-enter-active,
-  .content-leave-active {
-    transition: all 0.3s ease-in;
-  }
-
-  .content-enter-from,
-  .content-leave-to {
-    opacity: 0;
-  }
-</style>
