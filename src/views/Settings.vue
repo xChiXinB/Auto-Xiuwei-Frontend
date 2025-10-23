@@ -18,6 +18,15 @@
                 <input type="radio" name="style" value="green" id="green" v-model="style"></input>
                 <label for="green" class="px-3 text-green-500 text-2xl font-extrabold">Green</label>
             </div>
+
+            <div class="flex flex-row items-center pb-1.5 lg:pb-0">
+                <input type="radio" name="style" value="custom" id="custom" v-model="style"></input>
+                <label for="custom" class="px-3 text-2xl font-extrabold">Custom</label>
+                <div class="p-0.5 flex flex-row items-center border-2 border-black">
+                    <input type="color" class="p-0" v-model="custom_color"></input>
+                    <span class="px-0.5">Pick a color</span>
+                </div>
+            </div>
         </div>
 
         <h1 class="w-full text-3xl font-bold p-3">
@@ -39,13 +48,29 @@
 
 <script setup>
     import { ref, watch } from 'vue';
+    import { apply_color, remove_all_color } from '../composables/settings/apply_color';
 
+    const custom_color = ref(
+        localStorage.getItem('custom') === undefined
+        ? "#8B95C9"
+        : localStorage.getItem('custom'));
     const style = ref();
     style.value = localStorage.getItem('style');
     document.body.className = style.value;
     watch(style, (_new, _old) => {
         document.body.className = _new;
         localStorage.setItem('style', _new);
+        if (_new === 'custom') {
+            localStorage.setItem('custom', custom_color.value);
+            apply_color(localStorage.getItem('custom'));
+        } else {
+            remove_all_color();
+        }
+    });
+    watch(custom_color, (_new, _old) => {
+        if (localStorage.getItem('style') !== 'custom') return;
+        localStorage.setItem('custom', _new);
+        apply_color(localStorage.getItem('custom'));
     });
 
     const order = ref();

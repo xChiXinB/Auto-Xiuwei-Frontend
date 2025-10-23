@@ -71,6 +71,12 @@ https://tailwindcss.uihtm.com/docs/colors/ */
     --secondary-color-600: oklch(59.1% 0.293 322.896);
 }
 
+.custom {
+    opacity: 1; /* 占位符 */
+}
+
+/* ========================= 响应式样式 ========================= */
+
 .big-bg {
     background-color: var(--big-bg);
 }

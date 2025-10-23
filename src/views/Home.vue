@@ -6,7 +6,7 @@
       <SelectBar @select="handle_select"></SelectBar>
       <!--品字下面的吅 ⬇️--> <!--小组修为展示 | 修为详细记录-->
       <!--在竖屏平板和手机上，“吅”会变成“吕”-->
-      <div class="flex flex-col lg:flex-row items-center lg:justify-center h-auto my-5">
+      <div class="flex flex-col lg:flex-row items-start lg:justify-center h-auto my-5">
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 m-8 w-[90%] lg:w-[50%]">
           <Group
             :groups="scores[selected_period_id]"

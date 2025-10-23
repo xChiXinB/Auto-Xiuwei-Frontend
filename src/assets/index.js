@@ -1,12 +1,17 @@
 import { createApp } from "vue";
 import App from "/App.vue";
 import router from '../router';
+import { apply_color } from "../composables/settings/apply_color";
 
 // 用户个性化
-if (localStorage.getItem('style') == undefined) {
+const style = localStorage.getItem('style');
+if (style == undefined) {
     localStorage.setItem('style', 'blue');
+    style = 'blue';
+} else if (style === 'custom') {
+    apply_color(localStorage.getItem('custom'));
 }
-document.body.className = localStorage.getItem('style');
+document.body.className = style;
 
 if (localStorage.getItem('order') == undefined) {
     localStorage.setItem('order', '1');
