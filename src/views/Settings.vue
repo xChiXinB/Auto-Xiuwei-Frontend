@@ -51,7 +51,7 @@
     import { apply_color, remove_all_color } from '../composables/settings/apply_color';
 
     const custom_color = ref(
-        localStorage.getItem('custom') === undefined
+        localStorage.getItem('custom') === null
         ? "#8B95C9"
         : localStorage.getItem('custom'));
     const style = ref();

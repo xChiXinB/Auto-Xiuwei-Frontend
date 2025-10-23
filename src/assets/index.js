@@ -4,8 +4,8 @@ import router from '../router';
 import { apply_color } from "../composables/settings/apply_color";
 
 // 用户个性化
-const style = localStorage.getItem('style');
-if (style == undefined) {
+let style = localStorage.getItem('style');
+if (style == null) {
     localStorage.setItem('style', 'blue');
     style = 'blue';
 } else if (style === 'custom') {
@@ -13,7 +13,7 @@ if (style == undefined) {
 }
 document.body.className = style;
 
-if (localStorage.getItem('order') == undefined) {
+if (localStorage.getItem('order') == null) {
     localStorage.setItem('order', '1');
 }
 
