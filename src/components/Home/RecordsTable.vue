@@ -39,8 +39,8 @@
 </template>
 
 <script setup>
-  import { ref, watch } from "vue";
-  import { users } from "../../composables/configurations.mjs";
+  import { ref, watch, inject } from "vue";
+  const users = inject('users');
 
   const table_head = ref([
       'Time', 'Student', 'XiuWei', 'Reason'

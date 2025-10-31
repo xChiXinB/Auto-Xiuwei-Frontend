@@ -1,10 +1,10 @@
 <template>
-    <div class="w-[90%] lg:w-[30%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl big-bg mb-4 flex flex-col"
+    <div class="w-[90%] lg:w-[25%] min-h-[30vh] lg:h-160 shadow-2xl rounded-4xl big-bg mb-4 flex flex-col"
     ref="main">
         <template v-if="props.show">
             <div class="w-full h-18 rounded-t-4xl bg-400 flex items-center justify-center shrink-0">
                 <p class="text-4xl font-bold">
-                    {{ users[user_id] }}: {{ Object.values(transactions).map(val => val.variation).reduce((a, b) => a+b, 0).toFixed(2) }}'
+                    {{ users[user_id] }}: {{ t2sts(props.transactions) }}'
                 </p>
             </div>
             <div class="w-full overflow-auto">
@@ -26,7 +26,7 @@
         </template>
         <template v-else>
             <div class="w-full h-full flex-1 flex flex-col items-center justify-center">
-                <h1 class="text-3xl font-bold p-4 text-black/50">
+                <h1 class="text-2xl font-bold p-4 text-black/50">
                     Click on a ball to see details.
                 </h1>
             </div>
@@ -35,33 +35,17 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, watch } from 'vue';
-    import { users } from '../../composables/configurations.mjs';
+    import { inject, ref, watch } from 'vue';
+    import { Transactions } from '../../composables/Individuals/interface.ts';
+    import { t2sts } from '../../composables/Individuals/transactions2total_score.ts';
+    const users = inject('users');
 
-    const props = defineProps({
-        show: {
-            type: Boolean,
-            required: true,
-        },
-        transactions: {
-            type: Object,
-            required: true,
-        },
-        // 1: {
-        //     time: 1760140343,
-        //     variation: -1,
-        //     reason: "迟到",
-        // }, 
-        // 2: { time: ...... }
-        user_id: {
-            type: Number,
-            required: true,
-        },
-        clicks: {
-            type: Number,
-            required: true,
-        },
-    });
+    const props = defineProps<{
+        show: boolean,
+        transactions: Transactions,
+        user_id: number,
+        clicks: number,
+    }>();
 
     const main = ref();
     watch(() => props.clicks, (_, __) => {

@@ -34,8 +34,8 @@
   import RecordsTable from "../components/Home/RecordsTable.vue";
   import FetchUnsuccessful from "../components/FetchUnsuccessful.vue";
   import Loading from "../components/Loading.vue";
-  import { ref } from "vue";
-  import { pre_api } from "../composables/configurations.mjs";
+  import { provide, ref } from "vue";
+  import { API_route, getGroups, getPeriods, getUsers } from "../composables/configurations.mts";
 
   // 选中的period_id
   let selected_period_id = ref(0);
@@ -45,14 +45,37 @@
 
   // 网络请求状态
   function handle_e() {
-    successAPI.value = -100
+    // 将successAPI设为很小的负数，表示请求失败
+    successAPI.value = -Infinity;
   }
   const successAPI = ref(0);
-  const successAPITarget = 2;
+  const successAPITarget = 5;
+
+  // 解析configuration的promise
+  let periods = ref();
+  provide("periods", periods);
+  getPeriods().then(res => {
+    periods.value = res;
+    successAPI.value++;
+  }).catch(_ => handle_e());
+
+  let users = ref();
+  provide("users", users);
+  getUsers().then(res => {
+    users.value = res;
+    successAPI.value++;
+  }).catch(_ => handle_e());
+
+  let groups = ref();
+  provide("groups", groups);
+  getGroups().then(res => {
+    groups.value = res;
+    successAPI.value++;
+  }).catch(_ => handle_e());
 
   // 发送网络请求
   let scores = ref();
-  fetch(`${pre_api}/scores`).then(r => 
+  fetch(`${API_route}/scores`).then(r => 
     r.json()
   ).then(res => {
     scores.value = res;
@@ -60,7 +83,7 @@
   }).catch(_ => handle_e());
 
   let transactions = ref();
-  fetch(`${pre_api}/pbt`).then(r => 
+  fetch(`${API_route}/pbt`).then(r => 
     r.json()
   ).then(res => {
     transactions.value = res;

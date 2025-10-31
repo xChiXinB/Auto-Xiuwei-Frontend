@@ -12,9 +12,10 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-  import { periods } from '../../composables/configurations.mjs'
-  const sorted_periods_id = Object.keys(periods).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
+  import { inject, ref } from 'vue';
+  const periods = inject('periods');
+  console.log("Periods in SelectBar:", periods.value);
+  const sorted_periods_id = Object.keys(periods.value).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
 
   const emit = defineEmits(["select"]);
 

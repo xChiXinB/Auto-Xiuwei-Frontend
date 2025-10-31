@@ -14,7 +14,14 @@
 </template>
 
 <script setup>
-  import { groups, users } from '../../composables/configurations.mjs';
+  import { inject } from 'vue';
+  /**
+   * 注意：
+   * groups是group_id和group_name的映射表，是一个响应式变量，需要用.value访问其值
+   * props.groups是Map<group_id, Map<student_id, score>>，是一个普通对象
+   */
+  const groups = inject('groups');
+  const users = inject('users');
 
   const props = defineProps({
     groups: {

@@ -4,7 +4,7 @@
         <ClassTotal
         :sum="class_total_score"></ClassTotal>
         <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
-            <div class="flex flex-col w-[90%] lg:w-[60%] mb-4">
+            <div class="flex flex-col w-[90%] lg:w-[65%] mb-4">
                 <p class="p-2 text-gray-500">
                     The larger the radius of the ball, the higher the total xiuwei of the corresponding student
                 </p>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="js">
-    import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
+    import { ref, onMounted, onUnmounted, watch, nextTick, provide } from 'vue';
     import Matter from 'matter-js';
     const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';
@@ -35,21 +35,31 @@
     import FetchUnsuccessful from '../components/FetchUnsuccessful.vue';
     import Loading from '../components/Loading.vue';
     import { calculate_radii } from '../composables/Individuals/calculate_radii.js';
-    import { pre_api, users } from '../composables/configurations.mjs';
+    import { t2ts } from '../composables/Individuals/transactions2total_score.ts';
+    import { API_route, getUsers } from '../composables/configurations.mts';
 
     // 选中的student_id
     const selected_user_id = ref();
 
     // 网络请求状态
     function handle_e() {
-        successAPI.value = -100;   
+        // 将successAPI设为很小的负数，表示请求失败
+        successAPI.value = -Infinity;
     }
     const successAPI = ref(0);
-    const successAPITarget = 2;
+    const successAPITarget = 3;
+
+    // 解析configuration的promise
+    let users = ref();
+    provide("users", users);
+    getUsers().then(res => {
+        users.value = res;
+        successAPI.value++;
+    }).catch(_ => handle_e());
 
     // 发送网络请求
     let transactions = ref();
-    fetch(`${pre_api}/ibt`).then(r => 
+    fetch(`${API_route}/ibt`).then(r => 
         r.json()
     ).then(res => {
         transactions.value = res;
@@ -57,7 +67,7 @@
     }).catch(_ => handle_e());
 
     let class_total_score = ref();
-    fetch(`${pre_api}/total_score`).then(r => 
+    fetch(`${API_route}/total_score`).then(r => 
         r.json()
     ).then(res => {
         class_total_score.value = res[0];
@@ -68,7 +78,7 @@
     const do_show_transactions = ref(false);
     const clicks = ref(0); // 球被点击的次数
 
-    // matter.js所需变量
+    // matter.js变量初始化
     const min_r = Math.min(50, 0.1 * window.innerWidth);    
     const area_percentage = 0.73;
 
@@ -77,6 +87,9 @@
 
     let hovered_ball = null;
     let selected_ball = null;
+
+    let cannot_execute = false;
+    const throttle_time = 80; // ms
 
     function matterJsInit() {
         const CSSStyleDecoration = window.getComputedStyle(document.body);
@@ -113,17 +126,15 @@
         */
         const user_id2total_score = {};
         for (const user_id in transactions.value) {
-            user_id2total_score[user_id] = Object.values(transactions.value[user_id]).map(i => 
-                i.variation
-            ).reduce((a, b) => a+b, 0);
+            user_id2total_score[user_id] = t2ts(transactions.value[user_id]);
         }
-        // 为了确保顺序性
-        const id2score_id = Object.keys(user_id2total_score);
-        const id2score_score = Object.values(user_id2total_score);
-        const radii = calculate_radii(id2score_score, min_r, w*h*area_percentage, 0.8);
+        // 为了确保接下来计算的鲁棒性，将无序对象转换为有序数组
+        const user_ids = Object.keys(user_id2total_score);
+        const total_scores = Object.values(user_id2total_score);
+        const radii = calculate_radii(total_scores, min_r, w*h*area_percentage, 0.8);
 
         const balls = [];
-        id2score_id.forEach((id) => {
+        user_ids.forEach((id) => {
             balls.push(Bodies.circle(
                 // x position, y position, radius
                 w/2, h/2, radii[id],
@@ -136,7 +147,8 @@
                     },
                     info: {
                         user_id: +id,
-                        name: users[id],
+                        name: users.value[id],
+                        total_score: total_scores[id].toFixed(2),
                     },
                 }
             ));
@@ -215,6 +227,13 @@
         });
 
         render.canvas.addEventListener('mousemove', (e) => {
+            if (cannot_execute) return;
+            cannot_execute = true;
+            setTimeout(() => {
+                cannot_execute = false;
+            }, throttle_time);
+            console.log("Handling mousemove event...");
+
             const position = {
                 x: e.offsetX,
                 y: e.offsetY,
@@ -226,6 +245,7 @@
                 return;
             }
             hovered_ball = target[0];
+
         });
         render.canvas.addEventListener('click', (e) => {
             const position = {
@@ -256,19 +276,13 @@
     // 初始化
     watch(() => successAPI.value, (_new, _old) => {
         if (_new === successAPITarget) {
-            nextTick(() => {
-                matterJsInit();
-            });
+            nextTick(() => matterJsInit());
         };
     });
 
     // 窗口大小变化（含防抖）
-    onMounted(() => {
-        window.addEventListener('resize', matterJsReInit);
-    });
-    onUnmounted(() => {
-        window.removeEventListener('resize', matterJsReInit);
-    });
+    onMounted(() => window.addEventListener('resize', matterJsReInit));
+    onUnmounted(() => window.removeEventListener('resize', matterJsReInit));
     let timeout;
     function matterJsReInit() {
         clearTimeout(timeout);

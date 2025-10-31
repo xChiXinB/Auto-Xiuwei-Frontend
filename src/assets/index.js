@@ -17,4 +17,8 @@ if (localStorage.getItem('order') == null) {
     localStorage.setItem('order', '1');
 }
 
+if (localStorage.getItem('class') == null) {
+    localStorage.setItem('class', '0');
+}
+
 createApp(App).use(router).mount("#app");
