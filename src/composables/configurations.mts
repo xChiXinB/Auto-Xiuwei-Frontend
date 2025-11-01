@@ -1,11 +1,5 @@
-export const API_route: string = "http://60.205.243.107/api";
-// export const pre_api = "http://localhost:5000";
-
-// TODO: 加入查询参数以适应后端更新
-// export const periods = await fetch(`${pre_api}/periods`).then(r => r.json());
-// export const users = await fetch(`${pre_api}/users`).then(r => r.json());
-// export const groups = await fetch(`${pre_api}/groups`).then(r => r.json());
-// export const classes = await fetch(`${pre_api}/classes`).then(r => r.json());
+// export const API_route: string = "http://60.205.243.107/api";
+export const API_route = "http://localhost:5000";
 
 async function getPeriods(): Promise<any> {
     const class_id: string = localStorage.getItem("class") || "";

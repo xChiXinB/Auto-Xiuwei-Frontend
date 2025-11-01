@@ -12,10 +12,10 @@
                 class="w-full border-b-2 border-gray-600 last:border-b-0 p-2 text-center hover:font-bold">
                     <span v-for="(data, key) in props.transactions[transaction_id]" :key="key">
                         <template v-if="key == 'time'">
-                            {{ new Date(data * 1000).toLocaleString() }},
+                            {{ new Date(Number(data) * 1000).toLocaleString() }},
                         </template>
                         <template v-else-if="key == 'variation'">
-                            {{ data >= 0 ? `+` : `` }}{{ data }}
+                            {{ Number(data) >= 0 ? `+` : `` }}{{ data }}
                         </template>
                         <template v-else>
                             because {{ data }}
@@ -36,9 +36,9 @@
 
 <script setup lang="ts">
     import { inject, ref, watch } from 'vue';
-    import { Transactions } from '../../composables/Individuals/interface.ts';
+    import { Transactions, Users, usersKey } from '../../composables/Individuals/interface.ts';
     import { t2sts } from '../../composables/Individuals/transactions2total_score.ts';
-    const users = inject('users');
+    const users = inject(usersKey) || ref<Users>({});
 
     const props = defineProps<{
         show: boolean,
@@ -57,6 +57,6 @@
 
     let sorted_transaction_id;
     watch(() => props.transactions, () => {
-        sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
+        sorted_transaction_id = Object.keys(props.transactions).sort((a, b) => Number(localStorage.getItem('order')) * (Number(a) - Number(b)));
     });
 </script>

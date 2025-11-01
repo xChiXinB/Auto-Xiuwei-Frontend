@@ -61,7 +61,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
     import { ref, watch } from 'vue';
     import { apply_color, remove_all_color } from '../composables/settings/apply_color';
     import { getClasses } from '../composables/configurations.mts';
@@ -71,10 +71,7 @@
     });
 
     // 初始化颜色
-    const custom_color = ref(
-        localStorage.getItem('custom') === null
-        ? "#8B95C9"
-        : localStorage.getItem('custom'));
+    const custom_color = ref(localStorage.getItem('custom') || "#8B95C9");
     const style = ref();
     style.value = localStorage.getItem('style');
     document.body.className = style.value;
@@ -84,7 +81,7 @@
         localStorage.setItem('style', _new);
         if (_new === 'custom') {
             localStorage.setItem('custom', custom_color.value);
-            apply_color(localStorage.getItem('custom'));
+            apply_color(localStorage.getItem('custom') || '');
         } else {
             remove_all_color();
         }
@@ -93,7 +90,7 @@
     watch(custom_color, (_new, _old) => {
         if (localStorage.getItem('style') !== 'custom') return;
         localStorage.setItem('custom', _new);
-        apply_color(localStorage.getItem('custom'));
+        apply_color(localStorage.getItem('custom') || '');
     });
 
     // transactions展示顺序初始化
@@ -105,8 +102,8 @@
     });
 
     // 初始化class选择
-    const class_name = ref(0);
+    const class_name = ref(Number(localStorage.getItem('class')) || 0);
     watch(class_name, (_new, _old) => {
-        localStorage.setItem('class', _new);
+        localStorage.setItem('class', _new.toString());
     });
 </script>

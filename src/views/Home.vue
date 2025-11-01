@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="js">
   import Group from "../components/Home/Group.vue";
   import SelectBar from "../components/Home/SelectBar.vue";
   import RecordsTable from "../components/Home/RecordsTable.vue";
@@ -74,8 +74,9 @@
   }).catch(_ => handle_e());
 
   // 发送网络请求
+  const class_id = localStorage.getItem("class") || "";
   let scores = ref();
-  fetch(`${API_route}/scores`).then(r => 
+  fetch(`${API_route}/scores?class_id=${class_id}`).then(r => 
     r.json()
   ).then(res => {
     scores.value = res;
@@ -83,7 +84,7 @@
   }).catch(_ => handle_e());
 
   let transactions = ref();
-  fetch(`${API_route}/pbt`).then(r => 
+  fetch(`${API_route}/pbt?class_id=${class_id}`).then(r => 
     r.json()
   ).then(res => {
     transactions.value = res;
