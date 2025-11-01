@@ -89,7 +89,7 @@
     let selected_ball = null;
 
     let cannot_execute = false;
-    const throttle_time = 80; // ms
+    const throttle_time = 16; // ms
 
     function matterJsInit() {
         const CSSStyleDecoration = window.getComputedStyle(document.body);
@@ -226,12 +226,13 @@
             });
         });
 
+        // window.addEventListener('mousemove', (e) => {
         render.canvas.addEventListener('mousemove', (e) => {
-            if (cannot_execute) return;
-            cannot_execute = true;
-            setTimeout(() => {
-                cannot_execute = false;
-            }, throttle_time);
+            // if (cannot_execute) return;
+            // cannot_execute = true;
+            // setTimeout(() => {
+            //     cannot_execute = false;
+            // }, throttle_time);
             console.log("Handling mousemove event...");
 
             const position = {
