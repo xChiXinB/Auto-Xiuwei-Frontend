@@ -72,11 +72,11 @@
 
     // 初始化颜色
     const custom_color = ref(localStorage.getItem('custom') || "#8B95C9");
-    const style = ref();
-    style.value = localStorage.getItem('style');
+    const style = ref<string>('');
+    style.value = localStorage.getItem('style') || '';
     document.body.className = style.value;
     // 给定颜色调节
-    watch(style, (_new, _old) => {
+    watch(style, (_new, _) => {
         document.body.className = _new;
         localStorage.setItem('style', _new);
         if (_new === 'custom') {
@@ -87,7 +87,7 @@
         }
     });
     // 自定义颜色调节
-    watch(custom_color, (_new, _old) => {
+    watch(custom_color, (_new, _) => {
         if (localStorage.getItem('style') !== 'custom') return;
         localStorage.setItem('custom', _new);
         apply_color(localStorage.getItem('custom') || '');
@@ -97,13 +97,13 @@
     const order = ref();
     order.value = localStorage.getItem('order');
     // 展示顺序调节
-    watch(order, (_new, _old) => {
+    watch(order, (_new, _) => {
         localStorage.setItem('order', _new);
     });
 
     // 初始化class选择
     const class_name = ref(Number(localStorage.getItem('class')) || 0);
-    watch(class_name, (_new, _old) => {
+    watch(class_name, (_new, _) => {
         localStorage.setItem('class', _new.toString());
     });
 </script>
