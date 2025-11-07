@@ -56,7 +56,6 @@
     getUsers().then((res: Users) => {
         users.value = res;
         successAPI.value++;
-        console.log(users.value);
     }).catch(_ => handle_e());
 
     // 发送网络请求
@@ -91,7 +90,7 @@
     let hovered_ball: Matter.Body | null = null;
     let selected_ball: Matter.Body | null = null;
 
-    let mousemove_event_deactivate: NodeJS.Timeout;
+    let mousemove_event_deactivate: number;
     let mouse_in_canvas: boolean;
 
     function matterJsInit() {
@@ -137,7 +136,6 @@
         // 为了确保接下来计算的鲁棒性，将无序对象转换为有序数组
         const user_ids = Object.keys(user_id2total_score).map(id => Number(id));
         const total_scores = Object.values(user_id2total_score);
-        console.log(total_scores);
         const radii = calculate_radii(total_scores, min_r, w*h*area_percentage, 0.8);
 
         const balls: Matter.Body[] = [];
@@ -301,7 +299,7 @@
     // 窗口大小变化（含防抖）
     onMounted(() => window.addEventListener('resize', matterJsReInit));
     onUnmounted(() => window.removeEventListener('resize', matterJsReInit));
-    let timeout: NodeJS.Timeout;
+    let timeout: number;
     function matterJsReInit() {
         clearTimeout(timeout);
         timeout = setTimeout(() => {

@@ -1,5 +1,6 @@
 <template>
-    <div class="w-full h-full big-bg flex flex-col items-start p-10">
+    <div class="w-full h-full big-bg flex flex-col items-start p-10"
+        v-if="successAPI === successAPITarget">
 
         <h1 class="w-full text-3xl font-bold p-3">
             Class Selection
@@ -59,16 +60,34 @@
             </div>
         </div>
     </div>
+    <div v-else-if="successAPI < 0">
+        <FetchUnsuccessful></FetchUnsuccessful>
+    </div>
+    <div v-else>
+        <Loading></Loading>
+    </div>
 </template>
 
 <script setup lang="ts">
     import { ref, watch } from 'vue';
     import { apply_color, remove_all_color } from '../composables/settings/apply_color';
     import { getClasses } from '../composables/configurations.mts';
+    import FetchUnsuccessful from '../components/FetchUnsuccessful.vue';
+    import Loading from '../components/Loading.vue';
+
+    // 网络请求状态
+    function handle_e(): void {
+        successAPI.value = -Infinity;
+    }
+    const successAPI = ref<number>(0);
+    const successAPITarget: number = 1;
+
+    // 解析promise
     let classes = ref();
     getClasses().then(res => {
         classes.value = res;
-    });
+        successAPI.value++;
+    }).catch(_ => handle_e());
 
     // 初始化颜色
     const custom_color = ref(localStorage.getItem('custom') || "#8B95C9");
