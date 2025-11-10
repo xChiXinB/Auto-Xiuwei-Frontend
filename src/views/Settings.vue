@@ -59,6 +59,21 @@
                 <label for="order-1" class="px-3 text-2xl font-extrabold">Reverse chronological order</label>
             </div>
         </div>
+
+        <h1 class="w-full text-3xl font-bold p-3">
+            Display Students with 0 Scores
+        </h1>
+        <div class="w-full h-auto flex flex-col lg:flex-row pl-3 mb-10">
+            <div class="flex flex-row items-center pb-1.5 lg:pb-0">
+                <input type="radio" name="is0Shown" value="t" id="is0Shown-t" v-model="is0Shown"></input>
+                <label for="is0Shown-t" class="px-3 text-2xl font-extrabold">Yes</label>
+            </div>
+
+            <div class="flex flex-row items-center pb-1.5 lg:pb-0">
+                <input type="radio" name="is0Shown" value="f" id="is0Shown-f" v-model="is0Shown"></input>
+                <label for="is0Shown-f" class="px-3 text-2xl font-extrabold">No</label>
+            </div>
+        </div>
     </div>
     <div v-else-if="successAPI < 0">
         <FetchUnsuccessful></FetchUnsuccessful>
@@ -124,5 +139,11 @@
     const class_name = ref(Number(localStorage.getItem('class')) || 0);
     watch(class_name, (_new, _) => {
         localStorage.setItem('class', _new.toString());
+    });
+
+    // 初始化is0Shown选择
+    const is0Shown = ref<string>(localStorage.getItem('is0Shown') || 't');
+    watch(is0Shown, (_new, _) => {
+        localStorage.setItem('is0Shown', _new);
     });
 </script>

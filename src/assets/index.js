@@ -21,4 +21,8 @@ if (localStorage.getItem('class') == null) {
     localStorage.setItem('class', '0');
 }
 
+if (localStorage.getItem('is0Shown') == null) {
+    localStorage.setItem('is0Shown', 't');
+}
+
 createApp(App).use(router).mount("#app");
