@@ -55,6 +55,8 @@
   let periods = ref();
   provide("periods", periods);
   getPeriods().then(res => {
+    // 更新selected_period_id为res的键列表中最小的一个
+    selected_period_id.value = Math.min(...Object.keys(res).map(k => Number(k)));
     periods.value = res;
     successAPI.value++;
   }).catch(_ => handle_e());

@@ -1,5 +1,5 @@
-export const API_route: string = "http://60.205.243.107/api";
-// export const API_route = "http://localhost:5000";
+// export const API_route: string = "http://60.205.243.107/api";
+export const API_route = "http://localhost:5000";
 
 async function getPeriods(): Promise<any> {
     const class_id: string = localStorage.getItem("class") || "";
