@@ -35,6 +35,8 @@
   import FetchUnsuccessful from "../components/FetchUnsuccessful.vue";
   import Loading from "../components/Loading.vue";
   import { provide, ref } from "vue";
+  import { useI18n } from "vue-i18n";
+  const { t, locale} = useI18n({useScope: "global"});
   import { API_route, getGroups, getPeriods, getUsers } from "../composables/configurations.mts";
 
   // 选中的period_id
@@ -91,5 +93,5 @@
   ).then(res => {
     transactions.value = res;
     successAPI.value++;
-  }).catch(_ => handle_e())
+  }).catch(_ => handle_e());
 </script>

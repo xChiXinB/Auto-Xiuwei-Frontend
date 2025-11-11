@@ -1,6 +1,11 @@
 import { createApp } from "vue";
+import { createI18n } from "vue-i18n";
+
 import App from "/App.vue";
 import router from '../router';
+
+import zh from "../i18n/zh.json";
+import en from "../i18n/en.json";
 import { apply_color } from "../composables/settings/apply_color";
 
 // 用户个性化
@@ -25,4 +30,18 @@ if (localStorage.getItem('is0Shown') == null) {
     localStorage.setItem('is0Shown', 't');
 }
 
-createApp(App).use(router).mount("#app");
+const i18n = createI18n({
+    locale: "zh",
+    fallbackLocale: "en",
+    legacy: false,
+    messages: {
+        zh,
+        en,
+    },
+});
+
+
+createApp(App)
+   .use(router)
+   .use(i18n)
+   .mount("#app");
