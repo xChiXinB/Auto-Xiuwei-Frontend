@@ -1,3 +1,65 @@
 {
-    "helloWorld": "你好，世界！"
+    "records_table": {
+        "title": "积分变化记录",
+        "headers": {
+            "time": "时间",
+            "student": "学生",
+            "xiuwei": "积分",
+            "reason": "原因"
+        }
+    },
+    "fetch_unsuccessful": {
+        "title": "无法连接到服务器。",
+        "message1": "请检查网络，或尝试",
+        "message2": "页面。",
+        "refresh": "刷新"
+    },
+    "loading": {
+        "text": "加载中……"
+    },
+    "lucky_draw": {
+        "draw_button": "点击抽卡",
+        "hint": "选取一张卡片！"
+    },
+    "settings": {
+        "class_selection": {
+            "title": "班级选择",
+            "label": "班级列表："
+        },
+        "color_style": {
+            "title": "配色",
+            "options": {
+                "blue": "蓝色",
+                "pink": "粉色",
+                "green": "绿色",
+                "custom": "自定义颜色"
+            },
+            "color_picker": "选择颜色"
+        },
+        "display_order": {
+            "title": "积分变化记录展示顺序",
+            "options": {
+                "chronological": "按时间顺序展示",
+                "reverse": "按时间逆序展示"
+            }
+        },
+        "display_zero_scores": {
+            "title": "是否展示分数为0的学生",
+            "options": {
+                "yes": "是",
+                "no": "否"
+            }
+        }
+    },
+    "individuals": {
+        "class_total": {
+            "full_text": "班级总积分：",
+            "short_text": "合计 "
+        },
+        "student_detail": {
+            "default_hint": "点击小球以查看详情",
+            "reason_prefix": "因为",
+            "positive_prefix": "+"
+        }
+    }
 }

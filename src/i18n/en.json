@@ -1,3 +1,65 @@
 {
-    "helloWorld": "Hello World!"
+    "records_table": {
+        "title": "Detailed Xiuwei Records",
+        "headers": {
+            "time": "Time",
+            "student": "Student",
+            "xiuwei": "XiuWei",
+            "reason": "Reason"
+        }
+    },
+    "fetch_unsuccessful": {
+        "title": "We are unable to fetch your data.",
+        "message1": "Please check your network, or",
+        "message2": "the page.",
+        "refresh": "refresh"
+    },
+    "loading": {
+        "text": "Loading......"
+    },
+    "lucky_draw": {
+        "draw_button": "Tap to draw",
+        "hint": "Pick a card!"
+    },
+    "settings": {
+        "class_selection": {
+            "title": "Class Selection",
+            "label": "Click to select a class:"
+        },
+        "color_style": {
+            "title": "Website Color Style",
+            "options": {
+                "blue": "Blue",
+                "pink": "Pink",
+                "green": "Green",
+                "custom": "Custom"
+            },
+            "color_picker": "Pick a color"
+        },
+        "display_order": {
+            "title": "Display Order of XiuWei Records",
+            "options": {
+                "chronological": "Chronological order",
+                "reverse": "Reverse chronological order"
+            }
+        },
+        "display_zero_scores": {
+            "title": "Display Students with 0 Scores",
+            "options": {
+                "yes": "Yes",
+                "no": "No"
+            }
+        }
+    },
+    "individuals": {
+        "class_total": {
+            "full_text": "Class Total Xiuwei",
+            "short_text": "Sum"
+        },
+        "student_detail": {
+            "default_hint": "Click on a ball to see details.",
+            "reason_prefix": "because",
+            "positive_prefix": "+"
+        }
+    }
 }
