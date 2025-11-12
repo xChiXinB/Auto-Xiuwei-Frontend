@@ -15,10 +15,10 @@
                             {{ new Date(Number(data) * 1000).toLocaleString() }},
                         </template>
                         <template v-else-if="key == 'variation'">
-                            {{ Number(data) >= 0 ? `+` : `` }}{{ data }}
+                            {{ Number(data) >= 0 ? t('individuals.student_detail.positive_prefix') : `` }}{{ data }}
                         </template>
                         <template v-else>
-                            because {{ data }}
+                            {{ t('individuals.student_detail.reason_prefix') }} {{ data }}
                         </template>
                     </span>
                 </div>
@@ -27,7 +27,7 @@
         <template v-else>
             <div class="w-full h-full flex-1 flex flex-col items-center justify-center">
                 <h1 class="text-2xl font-bold p-4 text-black/50">
-                    Click on a ball to see details.
+                    {{ t('individuals.student_detail.default_hint') }}
                 </h1>
             </div>
         </template>
@@ -36,6 +36,8 @@
 
 <script setup lang="ts">
     import { inject, ref, watch } from 'vue';
+    import { useI18n } from 'vue-i18n';
+    const { t } = useI18n();
     import { Transactions, Users, usersKey } from '../../composables/Individuals/interface.ts';
     import { t2sts } from '../../composables/Individuals/transactions2total_score.ts';
     const users = inject(usersKey) || ref<Users>({});

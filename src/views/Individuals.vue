@@ -6,7 +6,7 @@
         <div class="flex flex-col lg:flex-row items-center lg:justify-evenly w-full h-auto">
             <div class="flex flex-col w-[90%] lg:w-[65%] mb-4">
                 <p class="p-2 text-gray-500">
-                    The larger the radius of the ball, the higher the total xiuwei of the corresponding student
+                    {{ t('individuals.hint') }}
                 </p>
                 <canvas ref="canvas"
                 class="w-full h-190 shrink-0"></canvas>
@@ -28,6 +28,8 @@
 
 <script setup lang="ts">
     import { ref, onMounted, onUnmounted, watch, nextTick, provide } from 'vue';
+    import { useI18n } from 'vue-i18n';
+    const { t } = useI18n();
     import Matter from 'matter-js';
     const { Engine, Events, Render, Runner, World, Bodies, Query } = Matter;
     import ClassTotal from '../components/Individuals/ClassTotal.vue';

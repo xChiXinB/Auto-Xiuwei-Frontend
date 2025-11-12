@@ -26,6 +26,10 @@
             "title": "Class Selection",
             "label": "Click to select a class:"
         },
+        "language_selection": {
+            "title": "Language Selection",
+            "label": "Click to select a language:"
+        },
         "color_style": {
             "title": "Website Color Style",
             "options": {
@@ -52,14 +56,21 @@
         }
     },
     "individuals": {
+        "hint": "The larger the radius of the ball, the higher the total xiuwei of the corresponding student",
         "class_total": {
-            "full_text": "Class Total Xiuwei",
-            "short_text": "Sum"
+            "full_text": "Class Total Xiuwei: ",
+            "short_text": "Sum: "
         },
         "student_detail": {
             "default_hint": "Click on a ball to see details.",
             "reason_prefix": "because",
             "positive_prefix": "+"
         }
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "individuals": "Individuals",
+        "lucky_draw": "Lucky Draw",
+        "settings": "Settings"
     }
 }

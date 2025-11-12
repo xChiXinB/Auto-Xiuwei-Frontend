@@ -36,7 +36,6 @@
   import Loading from "../components/Loading.vue";
   import { provide, ref } from "vue";
   import { useI18n } from "vue-i18n";
-  const { t, locale } = useI18n({useScope: "global"});
   import { API_route, getGroups, getPeriods, getUsers } from "../composables/configurations.mts";
 
   // 选中的period_id

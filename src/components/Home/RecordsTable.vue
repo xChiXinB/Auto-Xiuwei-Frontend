@@ -2,8 +2,8 @@
   <div class="w-[90%] lg:w-[40%] min-h-[30vh] m-8 lg:h-200 rounded-2xl shadow-2xl flex flex-col lg:sticky lg:top-10">
     <!--标题-->
     <div class="bg-400 p-4 rounded-t-2xl">
-      <h1 class="text-4xl font-bold text-white text-center">
-        Detailed Xiuwei Records
+      <h1 class="text-4xl font-bold text-black text-center">
+        {{ t('records_table.title') }}
       </h1>
     </div>
 
@@ -40,10 +40,12 @@
 
 <script setup>
   import { ref, watch, inject } from "vue";
+  import { useI18n } from "vue-i18n";
+  const { t } = useI18n();
   const users = inject('users');
 
   const table_head = ref([
-      'Time', 'Student', 'XiuWei', 'Reason'
+      t('records_table.headers.time'), t('records_table.headers.student'), t('records_table.headers.xiuwei'), t('records_table.headers.reason')
   ]);
 
   const props = defineProps({

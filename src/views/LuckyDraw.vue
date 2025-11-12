@@ -27,7 +27,7 @@
             :class="(is_disappear && (appear_index === -1)) ? `duration-500 scale-0` : `duration-300 hover:scale-x-110`"
             @click="draw()" ref="btn">
                 <p class="text-4xl font-bold">
-                    Tap to draw
+                    {{ t('lucky_draw.draw_button') }}
                 </p>
             </div>
         </teleport>
@@ -36,7 +36,7 @@
             <transition name="hint">
                 <div v-if="show_hint"
                 class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-65 md:w-110 h-30 opacity-60 bg-sec-300 backdrop-blur-sm border-4 border-sec-color-600 text-3xl md:text-5xl rounded-4xl shadow-2xl flex items-center justify-center">
-                    Pick a card!
+                    {{ t('lucky_draw.hint') }}
                 </div>
             </transition>
         </teleport>
@@ -45,6 +45,8 @@
 
 <script setup>
     import { ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+    const { t } = useI18n();
 
     const btn = ref(null);
     const is_disappear = ref(false);

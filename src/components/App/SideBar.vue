@@ -8,13 +8,16 @@
         v-for="navigator in ref_navig" :key="navigator.id" :class="(current_router === navigator.router) && `bg-500`"
         @click="alter_router(navigator.router)">
             <img :src="navigator.url" class="w-[40px] h-[40px]">
-            <span class="font-semibold" style="font-size: x-small;">{{ navigator.text }}</span>
+            <!-- 根据语言调整文字大小 -->
+            <span class="font-semibold" :style="{ fontSize: locale === 'zh' ? 'medium' : 'x-small' }">{{ navigator.text }}</span>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted } from "vue";
+    import { ref, onMounted, computed } from "vue";
+    import { useI18n } from "vue-i18n";
+    const { t, locale } = useI18n({useScope: "global"});
     import { useRouter } from "vue-router";
     const router = useRouter();
 
@@ -36,12 +39,12 @@
         text: string;
         router: string;
     }
-    const navigators: Unit[] = [
-        { id: 0, url: '/icons/dashboard.png', text: 'Dashboard', router: '/' },
-        { id: 1, url: '/icons/individuals.png', text: 'Individuals', router: '/individuals' },
-        { id: 2, url: '/icons/lucky-draw.png', text: 'Lucky Draw', router: '/lucky-draw' },
-        { id: 3, url: '/icons/settings.png', text: 'Settings', router: '/settings' }
-    ]
+    const navigators = computed<Unit[]>(() => [
+        { id: 0, url: '/icons/dashboard.png', text: t('sidebar.dashboard'), router: '/' },
+        { id: 1, url: '/icons/individuals.png', text: t('sidebar.individuals'), router: '/individuals' },
+        { id: 2, url: '/icons/lucky-draw.png', text: t('sidebar.lucky_draw'), router: '/lucky-draw' },
+        { id: 3, url: '/icons/settings.png', text: t('sidebar.settings'), router: '/settings' }
+    ]);
 
     const current_router = ref<string>("");
     onMounted(() => {

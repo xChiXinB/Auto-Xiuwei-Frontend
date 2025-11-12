@@ -30,8 +30,12 @@ if (localStorage.getItem('is0Shown') == null) {
     localStorage.setItem('is0Shown', 't');
 }
 
+if (localStorage.getItem('lang') == null) {
+    localStorage.setItem('lang', 'zh');
+}
+
 const i18n = createI18n({
-    locale: "zh",
+    locale: localStorage.getItem('lang') || 'zh',
     fallbackLocale: "en",
     legacy: false,
     messages: {
