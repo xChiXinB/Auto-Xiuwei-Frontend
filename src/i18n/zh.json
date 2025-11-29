@@ -70,6 +70,7 @@
     "sidebar": {
         "dashboard": "面板",
         "individuals": "个人记录",
+        "rank": "排名",
         "lucky_draw": "抽卡",
         "settings": "设置"
     }

@@ -43,7 +43,8 @@
         { id: 0, url: '/icons/dashboard.png', text: t('sidebar.dashboard'), router: '/' },
         { id: 1, url: '/icons/individuals.png', text: t('sidebar.individuals'), router: '/individuals' },
         { id: 2, url: '/icons/lucky-draw.png', text: t('sidebar.lucky_draw'), router: '/lucky-draw' },
-        { id: 3, url: '/icons/settings.png', text: t('sidebar.settings'), router: '/settings' }
+        { id: 3, url: '/icons/settings.png', text: t('sidebar.settings'), router: '/settings' },
+        { id: 4, url: '/icons/rank.png', text: t('sidebar.rank'), router: '/rank' },
     ]);
 
     const current_router = ref<string>("");

@@ -70,6 +70,7 @@
     "sidebar": {
         "dashboard": "Dashboard",
         "individuals": "Individuals",
+        "rank": "Rank",
         "lucky_draw": "Lucky Draw",
         "settings": "Settings"
     }
