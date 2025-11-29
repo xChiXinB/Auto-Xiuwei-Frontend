@@ -92,7 +92,7 @@
     let hovered_ball: Matter.Body | null = null;
     let selected_ball: Matter.Body | null = null;
 
-    let mousemove_event_deactivate: number;
+    let mousemove_event_deactivate: string | number | NodeJS.Timeout | undefined;
     let mouse_in_canvas: boolean;
 
     function matterJsInit() {
@@ -301,7 +301,7 @@
     // 窗口大小变化（含防抖）
     onMounted(() => window.addEventListener('resize', matterJsReInit));
     onUnmounted(() => window.removeEventListener('resize', matterJsReInit));
-    let timeout: number;
+    let timeout: string | number | NodeJS.Timeout | undefined;
     function matterJsReInit() {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
