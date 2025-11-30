@@ -141,6 +141,26 @@ https://tailwindcss.uihtm.com/docs/colors/ */
     background-color: var(--secondary-color-600);
 }
 
+.hover\:bg-sec-200:hover {
+    background-color: var(--secondary-color-200);
+}
+
+.hover\:bg-sec-300:hover {
+    background-color: var(--secondary-color-300);
+}
+
+.hover\:bg-sec-400:hover {
+    background-color: var(--secondary-color-400);
+}
+
+.hover\:bg-sec-500:hover {
+    background-color: var(--secondary-color-500);
+}
+
+.hover\:bg-sec-600:hover {
+    background-color: var(--secondary-color-600);
+}
+
 .border-color-200 {
     border-color: var(--color-200);
 }

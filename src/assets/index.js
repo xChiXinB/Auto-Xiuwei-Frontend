@@ -34,6 +34,10 @@ if (localStorage.getItem('lang') == null) {
     localStorage.setItem('lang', 'zh');
 }
 
+if (localStorage.getItem('highlightTopN') == null) {
+    localStorage.setItem('highlightTopN', '3');
+}
+
 const i18n = createI18n({
     locale: localStorage.getItem('lang') || 'zh',
     fallbackLocale: "en",

@@ -88,6 +88,17 @@
                 <label for="is0Shown-f" class="px-3 text-2xl font-extrabold">{{ t('settings.display_zero_scores.options.no') }}</label>
             </div>
         </div>
+
+        <h1 class="w-full text-3xl font-bold p-3">
+            {{ t('settings.highlight_top_n.title') }}
+        </h1>
+        <div class="w-full h-auto flex flex-col lg:flex-row pl-3 mb-10">
+            <label for="highlightTopN" class="px-3 text-2xl font-extrabold">
+                {{ t('settings.highlight_top_n.label') }}
+            </label>
+            <input type="number" id="highlightTopN" v-model="highlightTopN" min="1" max="100"
+                class="border-2 border-black rounded-[4px] px-2 py-1 w-20"></input>
+        </div>
     </div>
     <div v-else-if="successAPI < 0">
         <FetchUnsuccessful></FetchUnsuccessful>
@@ -161,6 +172,12 @@
     const is0Shown = ref<string>(localStorage.getItem('is0Shown') || 't');
     watch(is0Shown, (_new, _) => {
         localStorage.setItem('is0Shown', _new);
+    });
+
+    // 初始化highlightTopN选择
+    const highlightTopN = ref<number>(Number(localStorage.getItem('highlightTopN')) || 3);
+    watch(highlightTopN, (_new, _) => {
+        localStorage.setItem('highlightTopN', _new.toString());
     });
 
     // 初始化语言选择

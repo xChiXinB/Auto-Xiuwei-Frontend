@@ -53,6 +53,10 @@
                 "yes": "Yes",
                 "no": "No"
             }
+        },
+        "highlight_top_n": {
+            "title": "Rank Highlight Positions",
+            "label": "Highlight top:"
         }
     },
     "individuals": {
@@ -73,5 +77,16 @@
         "rank": "Rank",
         "lucky_draw": "Lucky Draw",
         "settings": "Settings"
+    },
+    "rank": {
+        "table_header": {
+            "group": "Group"
+        },
+        "export_button": "Save as Table",
+        "export_file": {
+            "suggested_name": "rank.xlsx",
+            "description": "Excel Files",
+            "success": "Table saved successfully!"
+        }
     }
 }

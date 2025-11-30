@@ -53,6 +53,10 @@
                 "yes": "是",
                 "no": "否"
             }
+        },
+        "highlight_top_n": {
+            "title": "排行榜高亮名次",
+            "label": "高亮前几名："
         }
     },
     "individuals": {
@@ -73,5 +77,16 @@
         "rank": "排名",
         "lucky_draw": "抽卡",
         "settings": "设置"
+    },
+    "rank": {
+        "table_header": {
+            "group": "组别"
+        },
+        "export_button": "保存为表格",
+        "export_file": {
+            "suggested_name": "排行榜.xlsx",
+            "description": "Excel 文件",
+            "success": "表格保存完毕！"
+        }
     }
 }
