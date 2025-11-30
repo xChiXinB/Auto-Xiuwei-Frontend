@@ -211,21 +211,37 @@
         const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array', cellStyles: true });
         const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-        // 使用文件系统API保存文件
-        try {
-            const handle = await (window as any).showSaveFilePicker({
-                suggestedName: t('rank.export_file.suggested_name'),
-                types: [{
-                    description: t('rank.export_file.description'),
-                    accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] }
-                }]
-            });
-            const writable = await handle.createWritable();
-            await writable.write(blob);
-            await writable.close();
+        // 使用文件系统API保存文件，如果不支持则使用传统下载方式
+        if ('showSaveFilePicker' in window) {
+            try {
+                const handle = await (window as any).showSaveFilePicker({
+                    suggestedName: t('rank.export_file.suggested_name'),
+                    types: [{
+                        description: t('rank.export_file.description'),
+                        accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] }
+                    }]
+                });
+                const writable = await handle.createWritable();
+                await writable.write(blob);
+                await writable.close();
+                alert(t('rank.export_file.success'));
+            } catch (err) {
+                // 用户取消了保存操作
+                if ((err as any).name !== 'AbortError') {
+                    console.error('Error saving file:', err);
+                }
+            }
+        } else {
+            // 备用方案：使用传统的下载方式
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = t('rank.export_file.suggested_name');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
             alert(t('rank.export_file.success'));
-        } catch (err) {
-            console.error('Error saving file:', err);
         }
     }
 </script>
