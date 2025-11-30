@@ -35,7 +35,6 @@
   import FetchUnsuccessful from "../components/FetchUnsuccessful.vue";
   import Loading from "../components/Loading.vue";
   import { provide, ref } from "vue";
-  import { useI18n } from "vue-i18n";
   import { API_route, getGroups, getPeriods, getUsers } from "../composables/configurations.mts";
 
   // 选中的period_id
