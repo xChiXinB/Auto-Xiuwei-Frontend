@@ -89,5 +89,10 @@
             "description": "Excel 文件",
             "success": "表格保存完毕！"
         }
+    },
+    "announcements": {
+        "ai": "本站部分代码在AI工具的帮助下生成。",
+        "author": "开发者：高一一班 王之众",
+        "thanks": "特别感谢所有支持我们的老师和家长！"
     }
 }

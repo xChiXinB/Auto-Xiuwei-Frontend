@@ -9,9 +9,10 @@
     :md="md"></SideBar>
   </div>
 
-  <div class="min-h-full duration-200 ease-in-out shrink-0" style="transition-property: transform width;"
+  <div class="min-h-full duration-200 ease-in-out shrink-0 relative" style="transition-property: transform width;"
   :class="collapsed ? `w-full translate-x-[-100px]` : `w-[calc(100vw-100px)]`">
     <Transition name="router"><router-view></router-view></Transition>
+    <Announcement></Announcement>
   </div>
 </template>
 
@@ -19,6 +20,7 @@
   import { ref, onMounted, onUnmounted } from 'vue';
   import SideBar from "./src/components/App/SideBar.vue";
   import ToggleSideBar from './src/components/App/ToggleSideBar.vue';
+  import Announcement from './src/components/App/Announcement.vue';
 
   const md: number = 768;
   let w: number = md;

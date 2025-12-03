@@ -89,5 +89,10 @@
             "description": "Excel Files",
             "success": "Table saved successfully!"
         }
+    },
+    "announcements": {
+        "ai": "This site's code was partially generated with the help of AI tools.",
+        "author": "Developed by Andy Wang",
+        "thanks": "Special thanks to all teachers and parents who supported us!"
     }
 }
