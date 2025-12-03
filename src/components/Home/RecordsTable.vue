@@ -110,6 +110,7 @@
     if (!allTransactions.value) return {};
     
     // 1. 收集所有 transactions 到一个数组
+
     /**
      * 结构：[
      *   { 
@@ -154,7 +155,7 @@
     const currentTransactions = Object.keys(props.transactions).map(id => ({
       transaction_id: Number(id),
       time: props.transactions[id].time,
-      globalIndex: transactionIndexMap.value[Number(id)]
+      globalIndex: transactionIndexMap.value[Number(id)] // 依赖之前计算的映射获取全局索引
     }));
     
     // 按全局索引排序，确保显示的连续性
