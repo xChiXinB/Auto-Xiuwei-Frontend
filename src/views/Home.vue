@@ -86,6 +86,7 @@
   }).catch(_ => handle_e());
 
   let transactions = ref();
+  provide("allTransactions", transactions);
   fetch(`${API_route}/pbt?class_id=${class_id}`).then(r => 
     r.json()
   ).then(res => {

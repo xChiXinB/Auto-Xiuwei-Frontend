@@ -6,7 +6,8 @@
             "student": "Student",
             "xiuwei": "XiuWei",
             "reason": "Reason"
-        }
+        },
+        "index_tooltip": "Index: {index}"
     },
     "fetch_unsuccessful": {
         "title": "We are unable to fetch your data.",

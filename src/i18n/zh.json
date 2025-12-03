@@ -6,7 +6,8 @@
             "student": "学生",
             "xiuwei": "积分",
             "reason": "原因"
-        }
+        },
+        "index_tooltip": "索引: {index}"
     },
     "fetch_unsuccessful": {
         "title": "无法连接到服务器。",
