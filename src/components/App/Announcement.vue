@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute bottom-5 w-full text-center text-gray-600">
+    <div class="absolute bottom-5 w-full text-center text-gray-600 hidden lg:block">
         {{ t('announcements.ai') }}
         <span class="font-bold">&nbsp;·&nbsp;</span>
         {{ t('announcements.author') }}
