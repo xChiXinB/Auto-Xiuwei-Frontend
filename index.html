@@ -8,6 +8,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="blue">
+    <noscript>
+        <div style="
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: oklch(90.1% 0.058 230.902);
+            padding: 2rem;
+            box-sizing: border-box;
+        ">
+            <div style="
+                max-width: 600px;
+                text-align: center;
+            ">
+                <h1 style="
+                    font-size: 2.5rem;
+                    font-weight: bold;
+                    color: oklch(40% 0.15 254.624);
+                    margin-bottom: 1.5rem;
+                ">我们无法运行这个网页。<br>We cannot run this page.</h1>
+                <p style="
+                    font-size: 1.125rem;
+                    color: oklch(50% 0.12 254.624);
+                    margin-bottom: 2rem;
+                    line-height: 1.6;
+                ">该网页必须依赖 JavaScript 运行，您似乎将其禁用了。<br>This page requires JavaScript to run, which appears to be disabled.</p>
+                <div style="
+                    font-size: 1rem;
+                    color: oklch(45% 0.13 254.624);
+                    line-height: 1.8;
+                ">
+                    <p style="margin-bottom: 0.5rem;">
+                        中文用户请参考:
+                        <a href="https://www.bing.com/search?q=%E6%B5%8F%E8%A7%88%E5%99%A8%E5%90%AF%E7%94%A8JavaScript" 
+                           style="color: oklch(60% 0.18 254.624); text-decoration: underline;"
+                           target="_blank">如何启用 JavaScript</a>
+                    </p>
+                    <p>
+                        English users:
+                        <a href="https://www.google.com/search?q=how+to+enable+browser+javascript" 
+                           style="color: oklch(60% 0.18 254.624); text-decoration: underline;"
+                           target="_blank">How to enable JavaScript</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </noscript>
     <script type="module" src="src/assets/index.js"></script>
     <div id="app" class="main"></div>
 </body>
