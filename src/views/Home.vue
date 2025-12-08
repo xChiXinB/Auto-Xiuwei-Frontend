@@ -3,7 +3,7 @@
     <!--品字布局 ⬇️-->
     <div class="w-full h-full flex flex-col">
       <!--品字上面的口 ⬇️-->        <!--周修为选择栏-->
-      <SelectBar @select="handle_select"></SelectBar>
+      <SelectBar ref="selectBarRef" @select="handle_select"></SelectBar>
       <!--品字下面的吅 ⬇️--> <!--小组修为展示 | 修为详细记录-->
       <!--在竖屏平板和手机上，“吅”会变成“吕”-->
       <div class="flex flex-col lg:flex-row items-start lg:justify-center h-auto my-5">
@@ -34,11 +34,13 @@
   import RecordsTable from "../components/Home/RecordsTable.vue";
   import FetchUnsuccessful from "../components/FetchUnsuccessful.vue";
   import Loading from "../components/Loading.vue";
-  import { provide, ref } from "vue";
+  import { provide, ref, watch, nextTick } from "vue";
   import { API_route, getGroups, getPeriods, getUsers } from "../composables/configurations.mts";
 
   // 选中的period_id
   let selected_period_id = ref(0);
+  const selectBarRef = ref();
+
   function handle_select(id) {
     selected_period_id.value = id;
   }
@@ -51,11 +53,19 @@
   const successAPI = ref(0);
   const successAPITarget = 5;
 
+  // 当所有API加载完成后，滚动到选中的周期
+  watch(successAPI, (newVal) => {
+    if (newVal === successAPITarget) {
+      nextTick(() => {
+        selectBarRef.value?.scrollToSelected();
+      });
+    }
+  });
+
   // 解析configuration的promise
   let periods = ref();
   provide("periods", periods);
   getPeriods().then(res => {
-    // 更新selected_period_id为res的键列表中最小的一个
     selected_period_id.value = Math.min(...Object.keys(res).map(k => Number(k)));
     periods.value = res;
     successAPI.value++;

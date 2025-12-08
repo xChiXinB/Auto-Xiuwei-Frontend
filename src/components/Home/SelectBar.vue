@@ -1,6 +1,7 @@
 <template>
   <div class="shadow w-full h-14 overflow-x-auto whitespace-nowrap">
     <div v-for="period_id in sorted_periods_id" :key="period_id"
+         :ref="el => period_elements[period_id] = el"
          class="inline-block h-full px-5 border-r-gray-500 border-r-1 last:border-r-0 hover:bg-300 hover:font-bold transition duration-200 ease-in-out"
          @click="select(period_id)"
          :class="selected_id === period_id ? 'bg-400' : 'bg-200'">
@@ -25,8 +26,20 @@
   ]);
   emit("select", selected_id.value);
 
+  const period_elements = ref({});
+
   function select(index) {
     selected_id.value = index;
     emit("select", index);
   }
+
+  function scrollToSelected() {
+    console.log('scrollToSelected called');
+    const element = period_elements.value[selected_id.value];
+    if (!element) return;
+    console.log('Scrolling to', selected_id.value);
+    element.scrollIntoView({ behavior: 'instant', block: 'center' });
+  }
+
+  defineExpose({ scrollToSelected });
 </script>
