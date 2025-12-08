@@ -56,9 +56,7 @@
   // 当所有API加载完成后，滚动到选中的周期
   watch(successAPI, (newVal) => {
     if (newVal === successAPITarget) {
-      nextTick(() => {
-        selectBarRef.value?.scrollToSelected();
-      });
+      nextTick(() => selectBarRef.value?.scrollToSelected());
     }
   });
 
