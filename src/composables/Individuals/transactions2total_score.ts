@@ -7,7 +7,9 @@ import { Transactions } from './interface.ts';
  * @returns 总积分，数字
  */
 function t2ts(transactions: Transactions): number {
-    return Object.values(transactions).map(t => t.variation).reduce((a, b) => a + b, 0);
+    return Object.values(transactions)
+        .map((t) => t.variation)
+        .reduce((a, b) => a + b, 0);
 }
 
 /**

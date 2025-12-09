@@ -1,80 +1,83 @@
 <template>
-  <ToggleSideBar
-  :is-visible="collapsed"
-  @extend="extend"></ToggleSideBar>
+    <ToggleSideBar :is-visible="collapsed" @extend="extend"></ToggleSideBar>
 
-  <div class="w-[100px] h-screen sticky top-0 transition duration-200 ease-in-out shrink-0"
-  :class="collapsed && `translate-x-[-100px]`">
-    <SideBar @collapse="collapse"
-    :md="md"></SideBar>
-  </div>
+    <div
+        class="w-[100px] h-screen sticky top-0 transition duration-200 ease-in-out shrink-0"
+        :class="collapsed && `translate-x-[-100px]`"
+    >
+        <SideBar @collapse="collapse" :md="md"></SideBar>
+    </div>
 
-  <div class="min-h-full duration-200 ease-in-out shrink-0 relative" style="transition-property: transform width;"
-  :class="collapsed ? `w-full translate-x-[-100px]` : `w-[calc(100vw-100px)]`">
-    <Transition name="router"><router-view></router-view></Transition>
-    <Announcement></Announcement>
-  </div>
+    <div
+        class="min-h-full duration-200 ease-in-out shrink-0 relative"
+        style="transition-property: transform width"
+        :class="
+            collapsed ? `w-full translate-x-[-100px]` : `w-[calc(100vw-100px)]`
+        "
+    >
+        <Transition name="router"><router-view></router-view></Transition>
+        <Announcement></Announcement>
+    </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, onUnmounted } from 'vue';
-  import SideBar from "./src/components/App/SideBar.vue";
-  import ToggleSideBar from './src/components/App/ToggleSideBar.vue';
-  import Announcement from './src/components/App/Announcement.vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import SideBar from './src/components/App/SideBar.vue';
+import ToggleSideBar from './src/components/App/ToggleSideBar.vue';
+import Announcement from './src/components/App/Announcement.vue';
 
-  const md: number = 768;
-  let w: number = md;
-  let timeout: any;
+const md: number = 768;
+let w: number = md;
+let timeout: any;
 
-  const collapsed = ref<boolean>(window.innerWidth < md);
-  function collapse() {
+const collapsed = ref<boolean>(window.innerWidth < md);
+function collapse() {
     collapsed.value = true;
-  }
-  function extend() {
+}
+function extend() {
     collapsed.value = false;
-  }
+}
 
-  onMounted(() => {
+onMounted(() => {
     resize_e();
     window.addEventListener('resize', resize_e);
-  });
+});
 
-  onUnmounted(() => {
+onUnmounted(() => {
     window.removeEventListener('resize', resize_e);
-  })
+});
 
-  function resize_e() {
+function resize_e() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      if (w < md) {
-        if (window.innerWidth < md) return;
-      } else if (w >= md) {
-        if (window.innerWidth >= md) return;
-      }
-      w = window.innerWidth;
-      if (w >= md) {
-        collapsed.value = false;
-      } else {
-        collapsed.value = true;
-      }
+        if (w < md) {
+            if (window.innerWidth < md) return;
+        } else if (w >= md) {
+            if (window.innerWidth >= md) return;
+        }
+        w = window.innerWidth;
+        if (w >= md) {
+            collapsed.value = false;
+        } else {
+            collapsed.value = true;
+        }
     }, 100);
-  }
-
+}
 </script>
 
 <style>
-  .router-enter-active,
-  .router-leave-active {
-      transition: all 0.1s ease-in;
-  }
+.router-enter-active,
+.router-leave-active {
+    transition: all 0.1s ease-in;
+}
 
-  .router-enter-from,
-  .router-leave-to {
-      opacity: 0;
-  }
+.router-enter-from,
+.router-leave-to {
+    opacity: 0;
+}
 
-  .router-enter-to,
-  .router-leave-from {
+.router-enter-to,
+.router-leave-from {
     opacity: 1;
-  }
+}
 </style>

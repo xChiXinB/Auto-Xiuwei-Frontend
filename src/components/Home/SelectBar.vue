@@ -1,45 +1,52 @@
 <template>
-  <div class="shadow w-full h-14 overflow-x-auto whitespace-nowrap">
-    <div v-for="period_id in sorted_periods_id" :key="period_id"
-         :ref="el => period_elements[period_id] = el"
-         class="inline-block h-full px-5 border-r-gray-500 border-r-1 last:border-r-0 hover:bg-300 hover:font-bold transition duration-200 ease-in-out"
-         @click="select(period_id)"
-         :class="selected_id === period_id ? 'bg-400' : 'bg-200'">
-      <div class="flex flex-col justify-center w-full h-full text-3xl text-gray-900">
-        {{ periods[period_id] }}
-      </div>
+    <div class="shadow w-full h-14 overflow-x-auto whitespace-nowrap">
+        <div
+            v-for="period_id in sorted_periods_id"
+            :key="period_id"
+            :ref="(el) => (period_elements[period_id] = el)"
+            class="inline-block h-full px-5 border-r-gray-500 border-r-1 last:border-r-0 hover:bg-300 hover:font-bold transition duration-200 ease-in-out"
+            @click="select(period_id)"
+            :class="selected_id === period_id ? 'bg-400' : 'bg-200'"
+        >
+            <div
+                class="flex flex-col justify-center w-full h-full text-3xl text-gray-900"
+            >
+                {{ periods[period_id] }}
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-  import { inject, ref } from 'vue';
-  const periods = inject('periods');
-  const sorted_periods_id = Object.keys(periods.value).sort((a, b) => Number(localStorage.getItem('order')) * (a-b));
+import { inject, ref } from 'vue';
+const periods = inject('periods');
+const sorted_periods_id = Object.keys(periods.value).sort(
+    (a, b) => Number(localStorage.getItem('order')) * (a - b),
+);
 
-  const emit = defineEmits(["select"]);
+const emit = defineEmits(['select']);
 
-  const selected_id = ref(sorted_periods_id[
-    localStorage.getItem('order') === '1'
-    ? sorted_periods_id.length - 1
-    : 0
-  ]);
-  emit("select", selected_id.value);
+const selected_id = ref(
+    sorted_periods_id[
+        localStorage.getItem('order') === '1' ? sorted_periods_id.length - 1 : 0
+    ],
+);
+emit('select', selected_id.value);
 
-  const period_elements = ref({});
+const period_elements = ref({});
 
-  function select(index) {
+function select(index) {
     selected_id.value = index;
-    emit("select", index);
-  }
+    emit('select', index);
+}
 
-  function scrollToSelected() {
+function scrollToSelected() {
     console.log('scrollToSelected called');
     const element = period_elements.value[selected_id.value];
     if (!element) return;
     console.log('Scrolling to', selected_id.value);
     element.scrollIntoView({ behavior: 'instant', block: 'center' });
-  }
+}
 
-  defineExpose({ scrollToSelected });
+defineExpose({ scrollToSelected });
 </script>

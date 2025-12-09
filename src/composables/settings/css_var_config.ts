@@ -1,5 +1,5 @@
 interface Var {
-    [key: string]: string,
+    [key: string]: string;
 }
 
 /**
@@ -14,7 +14,7 @@ function set_css_var(variables: Var): void {
 }
 
 /**
- * 
+ *
  * @param keys 要移除的css变量
  */
 function remove_css_var(keys: string[]): void {
@@ -24,4 +24,4 @@ function remove_css_var(keys: string[]): void {
     }
 }
 
-export {set_css_var, remove_css_var}
+export { set_css_var, remove_css_var };

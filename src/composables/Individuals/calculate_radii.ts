@@ -13,23 +13,28 @@
  * @param a_target - 当面积不足时，算法将使用的目标二次项系数 (a > 0)。
  * @returns 满足约束条件的输出半径数组 O。
  */
-function calculate_radii(I: number[], M: number, A_total: number, a_target: number): number[] {
+function calculate_radii(
+    I: number[],
+    M: number,
+    A_total: number,
+    a_target: number,
+): number[] {
     if (!I || I.length === 0 || A_total <= 0 || M <= 0 || a_target <= 0) {
         return [];
     }
 
     const N = I.length;
-    
+
     // --- 核心修改：动态确定顶点位置 ---
     // X_vertex 现在是 I 数组中的最小值，而不是 I[0]。
-    const X_vertex = Math.min(...I); 
-    
+    const X_vertex = Math.min(...I);
+
     const S_total = A_total / Math.PI; // 半径平方和 S_total
 
     // 1. 计算 Dk = (I[k] - X_vertex)^2，以及二次方程系数 P_sum 和 Q_sum
     let P_sum = 0; // P = Sum( (I[k] - X_vertex)^4 )
     let Q_sum = 0; // Q_sum = Sum( (I[k] - X_vertex)^2 )
-    
+
     // 存储 Dk 以便后续计算
     const Dk_array: number[] = [];
 
@@ -37,9 +42,9 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
         const diff = Ik - X_vertex;
         const Dk = diff * diff; // (I_k - X_vertex)^2
         Dk_array.push(Dk);
-        
+
         P_sum += Dk * Dk; // P = Sum(Dk^2)
-        Q_sum += Dk;      // Q_sum = Sum(Dk)
+        Q_sum += Dk; // Q_sum = Sum(Dk)
     }
 
     // --- 失败情况 二：数组单一 (P_sum = 0) 处理 ---
@@ -48,12 +53,12 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
         // 平分 A_total，R_new^2 = S_total / N
         const R_new_squared = S_total / N;
         if (R_new_squared < 0) {
-             throw new Error("数学错误：计算得到的半径平方为负数。");
+            throw new Error('数学错误：计算得到的半径平方为负数。');
         }
         const R_new = Math.sqrt(R_new_squared);
         return new Array(N).fill(R_new);
     }
-    
+
     // 2. 尝试求解 a (默认情况：满足 M 和 A_total)
     // 方程: P_final*a^2 + Q_final*a + R_final = 0
     const P_final = P_sum;
@@ -62,13 +67,15 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
     const R_final = R_prime - S_total;
 
     const discriminant = Q_final * Q_final - 4 * P_final * R_final;
-    
+
     let a: number;
     let M_new: number;
 
     // --- 失败情况 一：面积不足 ($\Delta < 0$) 处理 ---
     if (discriminant < 0) {
-        console.warn('Warning: It is detected that the user\'s screen is too small, which may cause the text on the ball to be unclear.')
+        console.warn(
+            "Warning: It is detected that the user's screen is too small, which may cause the text on the ball to be unclear.",
+        );
         // 忽略原 M 约束，固定 a = a_target，求解 M_new
         a = a_target;
 
@@ -80,34 +87,39 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
         const disc_M = Q_M * Q_M - 4 * P_M * R_M;
 
         if (disc_M < 0) {
-             throw new Error("约束冲突：固定 a_target 后，无法找到满足总面积的正数最小半径 M_new。");
+            throw new Error(
+                '约束冲突：固定 a_target 后，无法找到满足总面积的正数最小半径 M_new。',
+            );
         }
 
         const sqrtDisc_M = Math.sqrt(disc_M);
-        
+
         // M_new 必须是正数，我们选择较大的正数解
         M_new = (-Q_M + sqrtDisc_M) / (2 * N);
-        
-        if (M_new <= 0) {
-            throw new Error("约束冲突：A_total 过小，无法满足 a_target 和 M_new > 0 的约束。");
-        }
 
-    } else { 
+        if (M_new <= 0) {
+            throw new Error(
+                '约束冲突：A_total 过小，无法满足 a_target 和 M_new > 0 的约束。',
+            );
+        }
+    } else {
         // 3. 正常求解 a ($\Delta \ge 0$)
         const sqrtDiscriminant = Math.sqrt(discriminant);
-        
+
         // 选择 a > 0 的解
         const a1 = (-Q_final + sqrtDiscriminant) / (2 * P_final);
         const a2 = (-Q_final - sqrtDiscriminant) / (2 * P_final);
-        
+
         if (a1 > 0) {
             a = a1;
         } else if (a2 > 0) {
             a = a2;
         } else {
-            throw new Error("约束冲突：方程有实数解，但没有 a > 0 的正数开口系数解。");
+            throw new Error(
+                '约束冲突：方程有实数解，但没有 a > 0 的正数开口系数解。',
+            );
         }
-        
+
         // 在正常情况下，M_new 就是输入的 M
         M_new = M;
     }
@@ -123,4 +135,4 @@ function calculate_radii(I: number[], M: number, A_total: number, a_target: numb
     return O;
 }
 
-export {calculate_radii};
+export { calculate_radii };

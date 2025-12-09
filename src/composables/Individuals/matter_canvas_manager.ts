@@ -1,7 +1,12 @@
 import Matter from 'matter-js';
 import { calculate_radii } from './calculate_radii.js';
 import { t2ts } from './transactions2total_score.ts';
-import { BallInformation, IBTransactions, UserId2TotalScore, Users } from './interface.ts';
+import {
+    BallInformation,
+    IBTransactions,
+    UserId2TotalScore,
+    Users,
+} from './interface.ts';
 
 export interface MatterCanvasConfig {
     canvas: HTMLCanvasElement;
@@ -60,7 +65,8 @@ export class MatterCanvasManager {
         } else {
             const w_canvas = this.canvas.clientWidth;
             const w_should = document.body.clientWidth * 0.9;
-            this.canvasWidth = (Math.abs(w_canvas - w_should) < 5) ? w_canvas : w_should;
+            this.canvasWidth =
+                Math.abs(w_canvas - w_should) < 5 ? w_canvas : w_should;
         }
         this.canvasHeight = this.canvas.clientHeight;
     }
@@ -78,7 +84,7 @@ export class MatterCanvasManager {
                 height: this.canvasHeight,
                 wireframes: false,
                 background: CSSStyleDecoration.getPropertyValue('--big-bg'),
-            }
+            },
         });
         Render.run(this.render);
         this.runner = Runner.create();
@@ -94,31 +100,41 @@ export class MatterCanvasManager {
             user_id2total_score[user_id] = t2ts(this.transactions[user_id]);
         }
 
-        const user_ids = Object.keys(user_id2total_score).map(id => Number(id));
+        const user_ids = Object.keys(user_id2total_score).map((id) =>
+            Number(id),
+        );
         const total_scores = Object.values(user_id2total_score);
         const radii = calculate_radii(
             total_scores,
             this.minRadius,
             this.canvasWidth * this.canvasHeight * this.areaPercentage,
-            0.8
+            0.8,
         );
 
         this.balls = [];
         this.ballInfo = [];
         user_ids.forEach((id) => {
-            this.balls.push(Bodies.circle(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                radii[id],
-                {
-                    restitution: 0.5,
-                    render: {
-                        fillStyle: CSSStyleDecoration.getPropertyValue('--color-300'),
-                        strokeStyle: CSSStyleDecoration.getPropertyValue('--color-400'),
-                        lineWidth: 10,
+            this.balls.push(
+                Bodies.circle(
+                    this.canvasWidth / 2,
+                    this.canvasHeight / 2,
+                    radii[id],
+                    {
+                        restitution: 0.5,
+                        render: {
+                            fillStyle:
+                                CSSStyleDecoration.getPropertyValue(
+                                    '--color-300',
+                                ),
+                            strokeStyle:
+                                CSSStyleDecoration.getPropertyValue(
+                                    '--color-400',
+                                ),
+                            lineWidth: 10,
+                        },
                     },
-                }
-            ));
+                ),
+            );
             this.ballInfo.push({
                 user_id: +id,
                 name: this.users[id],
@@ -135,23 +151,41 @@ export class MatterCanvasManager {
         const border_color = CSSStyleDecoration.getPropertyValue('--color-500');
 
         const ceiling = Bodies.rectangle(
-            this.canvasWidth / 2, 0, this.canvasWidth, 20,
-            { isStatic: true, render: { fillStyle: border_color } }
+            this.canvasWidth / 2,
+            0,
+            this.canvasWidth,
+            20,
+            { isStatic: true, render: { fillStyle: border_color } },
         );
         const ground = Bodies.rectangle(
-            this.canvasWidth / 2, this.canvasHeight, this.canvasWidth, 20,
-            { isStatic: true, render: { fillStyle: border_color } }
+            this.canvasWidth / 2,
+            this.canvasHeight,
+            this.canvasWidth,
+            20,
+            { isStatic: true, render: { fillStyle: border_color } },
         );
         const left_wall = Bodies.rectangle(
-            0, this.canvasHeight / 2, 20, this.canvasHeight,
-            { isStatic: true, render: { fillStyle: border_color } }
+            0,
+            this.canvasHeight / 2,
+            20,
+            this.canvasHeight,
+            { isStatic: true, render: { fillStyle: border_color } },
         );
         const right_wall = Bodies.rectangle(
-            this.canvasWidth, this.canvasHeight / 2, 20, this.canvasHeight,
-            { isStatic: true, render: { fillStyle: border_color } }
+            this.canvasWidth,
+            this.canvasHeight / 2,
+            20,
+            this.canvasHeight,
+            { isStatic: true, render: { fillStyle: border_color } },
         );
 
-        World.add(this.engine.world, [...this.balls, ground, left_wall, right_wall, ceiling]);
+        World.add(this.engine.world, [
+            ...this.balls,
+            ground,
+            left_wall,
+            right_wall,
+            ceiling,
+        ]);
     }
 
     private setupRendering(): void {
@@ -166,13 +200,22 @@ export class MatterCanvasManager {
                 let opacity = 0.3;
                 if (this.selectedBall === null && this.hoveredBall == null) {
                     opacity = 1.0;
-                } else if (ball === this.selectedBall || ball === this.hoveredBall) {
+                } else if (
+                    ball === this.selectedBall ||
+                    ball === this.hoveredBall
+                ) {
                     opacity = 1.0;
                 }
                 ctx.globalAlpha = opacity;
 
                 ctx.beginPath();
-                ctx.arc(ball.position.x, ball.position.y, (ball.circleRadius || 0), 0, 2 * Math.PI);
+                ctx.arc(
+                    ball.position.x,
+                    ball.position.y,
+                    ball.circleRadius || 0,
+                    0,
+                    2 * Math.PI,
+                );
                 ctx.fillStyle = ball.render.fillStyle || '';
                 ctx.fill();
 
@@ -183,7 +226,7 @@ export class MatterCanvasManager {
                 ctx.font = `${font_size}px 'Times New Roman'`;
                 const width = ctx.measureText(text).width;
                 if (width > radius * 1.7) {
-                    font_size = font_size * (radius * 1.7 / width);
+                    font_size = font_size * ((radius * 1.7) / width);
                     ctx.font = `${font_size}px 'Times New Roman'`;
                 }
                 ctx.fillStyle = '#000000';
@@ -237,7 +280,8 @@ export class MatterCanvasManager {
                 return;
             }
             this.selectedBall = target[0];
-            const userId = this.ballInfo[this.balls.indexOf(this.selectedBall)].user_id;
+            const userId =
+                this.ballInfo[this.balls.indexOf(this.selectedBall)].user_id;
             this.onSelectionChange(userId);
         });
     }

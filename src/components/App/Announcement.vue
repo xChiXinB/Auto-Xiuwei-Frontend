@@ -1,5 +1,7 @@
 <template>
-    <div class="absolute bottom-5 w-full text-center text-gray-600 hidden lg:block">
+    <div
+        class="absolute bottom-5 w-full text-center text-gray-600 hidden lg:block"
+    >
         {{ t('announcements.ai') }}
         <span class="font-bold">&nbsp;·&nbsp;</span>
         {{ t('announcements.author') }}
@@ -9,6 +11,6 @@
 </template>
 
 <script setup lang="ts">
-    import { useI18n } from 'vue-i18n';
-    const { t } = useI18n();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
