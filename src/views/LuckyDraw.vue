@@ -73,7 +73,6 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-const btn = ref(null);
 const is_disappear = ref(false);
 const appear_index = ref(-1);
 const show_hint = ref(false);
