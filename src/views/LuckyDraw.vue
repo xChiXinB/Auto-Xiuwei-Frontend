@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full min-h-full big-bg">
+    <div class="w-full min-h-full big-bg relative">
         <div class="w-full h-14 shadow overflow-x-auto whitespace-nowrap">
             <div
                 v-for="(contents, title) in all_contents"
@@ -38,9 +38,31 @@
             </div>
         </div>
 
+        <!-- 覆盖层和放大卡片 -->
+        <div
+            v-if="show_enlarged_card"
+            class="absolute inset-0 z-40 flex items-center justify-center"
+        >
+            <!-- 背景遮罩 -->
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+            
+            <!-- 放大的卡片 -->
+            <div
+                class="relative z-50 bg-300 rounded-2xl w-80 h-40 border-6 border-color-400 shadow-2xl flex justify-center items-center transition-all duration-700 ease-out"
+                :class="{
+                    'card-enlarged': !is_card_falling,
+                    'card-falling': is_card_falling
+                }"
+            >
+                <p class="text-5xl font-bold">
+                    {{ enlarged_card_content }}
+                </p>
+            </div>
+        </div>
+
         <teleport to="body">
             <div
-                class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center"
+                class="w-100 h-30 fixed bottom-10 left-[50%] translate-x-[-50%] bg-white/30 backdrop-blur-lg rounded-full overflow-hidden shadow-lg transition ease-in-out flex justify-center items-center z-50"
                 :class="
                     is_disappear && appear_index === -1
                         ? `duration-500 scale-0`
@@ -76,6 +98,10 @@ const { t } = useI18n();
 const is_disappear = ref(false);
 const appear_index = ref(-1);
 const show_hint = ref(false);
+const show_enlarged_card = ref(false);
+const selected_card_index = ref(-1);
+const enlarged_card_content = ref('');
+const is_card_falling = ref(false);
 let interval_id = null;
 
 const all_contents = {
@@ -106,6 +132,12 @@ function select(title) {
 
     is_disappear.value = false;
     appear_index.value = -1;
+    
+    // 重置放大卡片状态
+    show_enlarged_card.value = false;
+    selected_card_index.value = -1;
+    enlarged_card_content.value = '';
+    is_card_falling.value = false;
 }
 const selected_title = ref();
 const actual_contents = ref();
@@ -113,6 +145,20 @@ const card_contents = ref();
 select('Rewards');
 
 function draw() {
+    // 如果有放大的卡片，先让其掉落
+    if (show_enlarged_card.value) {
+        is_card_falling.value = true;
+        
+        // 等待掉落动画完成后隐藏卡片
+        setTimeout(() => {
+            show_enlarged_card.value = false;
+            selected_card_index.value = -1;
+            enlarged_card_content.value = '';
+            is_card_falling.value = false;
+        }, 700);
+        return;
+    }
+    
     show_hint.value = true;
     setTimeout(() => {
         show_hint.value = false;
@@ -137,6 +183,12 @@ function click_card(i) {
     );
     card_contents.value[i] = actual_contents.value[contents_id];
     appear_index.value = i;
+    
+    // 显示放大卡片
+    selected_card_index.value = i;
+    enlarged_card_content.value = actual_contents.value[contents_id];
+    show_enlarged_card.value = true;
+    is_card_falling.value = false;
 }
 </script>
 
@@ -153,5 +205,36 @@ function click_card(i) {
 .hint-leave-to {
     transform: scale(0);
     opacity: 0;
+}
+
+/* 卡片放大动画 */
+.card-enlarged {
+    animation: cardEnlarge 0.7s ease-out;
+}
+
+.card-falling {
+    animation: cardFall 0.7s ease-in forwards;
+}
+
+@keyframes cardEnlarge {
+    from {
+        transform: scale(0.2) translate(0, 0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translate(0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes cardFall {
+    from {
+        transform: scale(1) translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.8) translate(0, 100vh) rotate(10deg);
+        opacity: 0;
+    }
 }
 </style>
