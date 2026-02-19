@@ -81,7 +81,8 @@
     },
     "rank": {
         "table_header": {
-            "group": "Group"
+            "group": "Group",
+            "group_total": "Group Total"
         },
         "export_button": "Save as Table",
         "export_file": {

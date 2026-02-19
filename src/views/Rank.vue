@@ -16,6 +16,11 @@
                                 {{ t('rank.table_header.group') }}
                             </th>
                             <th
+                                class="bg-400 p-4 text-black font-bold text-center border-r border-r-gray-500"
+                            >
+                                {{ t('rank.table_header.group_total') }}
+                            </th>
+                            <th
                                 v-for="period_id in sorted_period_ids"
                                 :key="period_id"
                                 class="bg-400 p-4 text-black font-bold text-center border-r border-r-gray-500 last:border-r-0"
@@ -34,6 +39,11 @@
                                 class="bg-300 p-3 text-black font-bold text-center border-r border-r-gray-500"
                             >
                                 {{ groups[group_id] }}
+                            </td>
+                            <td
+                                class="bg-200 p-3 text-gray-700 text-center border-r border-r-gray-500 font-extrabold text-2xl"
+                            >
+                                {{ getGroupTotalScore(group_id) }}
                             </td>
                             <td
                                 v-for="period_id in sorted_period_ids"
@@ -132,6 +142,23 @@ const sorted_group_ids = computed(() => {
         .map((k) => Number(k))
         .sort((a, b) => a - b);
 });
+
+// 计算指定组所有周期的总分
+function getGroupTotalScore(group_id: number): string {
+    if (!scores.value) return '0.00';
+    let ret = 0;
+    for (const period_id in scores.value) {
+        if (!scores.value[period_id][group_id]) continue;
+
+        const group_scores_map_in_this_period =
+            scores.value[period_id][group_id];
+        ret += Object.values(group_scores_map_in_this_period).reduce(
+            (sum: number, score: any) => sum + Number(score),
+            0,
+        );
+    }
+    return ret.toFixed(2);
+}
 
 // 计算指定组在指定周期的总分
 function getGroupScore(group_id: number, period_id: number): string {

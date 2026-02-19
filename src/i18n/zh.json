@@ -81,7 +81,8 @@
     },
     "rank": {
         "table_header": {
-            "group": "组别"
+            "group": "组别",
+            "group_total": "小组总积分"
         },
         "export_button": "保存为表格",
         "export_file": {
