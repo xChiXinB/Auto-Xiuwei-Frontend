@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, watchEffect } from 'vue';
 /*
  * 注意：
  * groups是group_id和group_name的映射表，是一个响应式变量，需要用.value访问其值
@@ -35,6 +35,8 @@ import { computed, inject } from 'vue';
  */
 const groups = inject('groups');
 const users = inject('users');
+const DEBUG_GROUP_RENDER =
+    (localStorage.getItem('debugGroupRender') || 'f') === 't';
 
 const props = defineProps({
     groups: {
@@ -71,5 +73,38 @@ const filtered_groups = computed(() => {
         }
     }
     return res;
+});
+
+watchEffect(() => {
+    if (!DEBUG_GROUP_RENDER) return;
+
+    const byValues = Object.values(filtered_groups.value || {});
+    const byKeys = Object.keys(filtered_groups.value || {});
+
+    console.groupCollapsed('[Group Debug] Render snapshot');
+    console.log('sorted_group_id =>', sorted_group_id);
+    console.log('Object.keys(filtered_groups) =>', byKeys);
+
+    for (const group_id of sorted_group_id) {
+        const keyBasedMembers = (filtered_groups.value || {})[group_id];
+        const valueBasedMembers = byValues[group_id];
+
+        console.log(
+            `group_id=${group_id}`,
+            {
+                groupName: groups?.value?.[group_id],
+                keyBasedCount: keyBasedMembers
+                    ? Object.keys(keyBasedMembers).length
+                    : 'undefined',
+                valueBasedCount: valueBasedMembers
+                    ? Object.keys(valueBasedMembers).length
+                    : 'undefined',
+                keyBasedMembers,
+                valueBasedMembers,
+            },
+        );
+    }
+
+    console.groupEnd();
 });
 </script>
